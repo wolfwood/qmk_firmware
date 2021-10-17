@@ -54,9 +54,9 @@ static const bool col_expanded[MATRIX_COLS] = COL_EXPANDED;
 static matrix_row_t matrix[MATRIX_ROWS];
 
 static matrix_row_t matrix_debouncing[MATRIX_ROWS];
+static const uint8_t expander_col_pins[MATRIX_COLS] = MATRIX_EXPANDER_COL_PINS;
 
 #if (DIODE_DIRECTION == COL2ROW)
-    static const uint8_t expander_col_pins[MATRIX_COLS] = MATRIX_EXPANDER_COL_PINS;
     static void init_cols(void);
     static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row);
     static void unselect_rows(void);
@@ -425,7 +425,7 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
     select_col(current_col);
     wait_us(30);
 
-    if (current_col < 6) {
+    if (onboard_col_pins[current_col] == 0) {
         // read rows from expander
         if (expander_status) {
             // it's already in an error state; nothing we can do
@@ -476,7 +476,7 @@ static void select_col(uint8_t col)
         } else {
             // set active col low  : 0
             // set other cols hi-Z : 1
-            uint8_t port = 0xFF & ~(1<<col);
+            uint8_t port = 0xFF & ~(1<<expander_col_pins[col]);
             expander_status = i2c_writeReg(I2C_ADDR, EXPANDER_COL_REGISTER, &port, 1, I2C_TIMEOUT);
         }
     } else {
