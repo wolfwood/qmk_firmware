@@ -43,14 +43,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_ROW_PINS { D0, D5 }
 //#define MATRIX_COL_PINS { F1, F0, B0 }
 
-#define XX NO_PIN
-
 #define DIRECT_PINS {		      \
     {E0, C3, A4, A0, B6, B2, F0, F4}, \
     {E1, C4, A5, A1, B5, B1, F1, F5}, \
     {C0, C5, A6, A2, B4, B0, F2, F6}, \
     {C1, C6, A7, A3, B3, E7, F3, F7}, \
-    {C2, C7, XX, XX, XX, XX, XX, XX}  \
+    {C2, C7, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN}  \
 }
 
 #define UNUSED_PINS {B7, D3, D4, D7, E6} // D0, D1
