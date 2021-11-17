@@ -29,14 +29,21 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
-    [_BASE] = LAYOUT(
-        KC_A,    KC_1,    MO(_FN),
-            KC_TAB,   KC_SPC
+    [_BASE] = LAYOUT_right_hand(
+		     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_EQL,
+		     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_BSLS,
+		     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,
+		     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSPC,
+		               KC_UP,
+		     KC_LEFT,  KC_ENT,   KC_RGHT,
+		               KC_DOWN,
+		     KC_TILD,            KC_GRV,
+		     KC_ESC,   KC_ENT,   KC_TAB
     ),
-    [_FN] = LAYOUT(
+    /*[_FN] = LAYOUT(
         QMKBEST, QMKURL,  _______,
             RESET,    XXXXXXX
-    )
+	    )*/
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
