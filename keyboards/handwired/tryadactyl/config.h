@@ -161,6 +161,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define BOOTMAGIC_LITE_COLUMN 0
 
 
+#define PS2_MOUSE_ROTATE 180 /* Compensate for South-facing device orientation. */
 
 #ifdef PS2_USE_USART
     #define PS2_CLOCK_PORT  PORTD
