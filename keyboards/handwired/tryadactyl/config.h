@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     {C2, C7, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN, NO_PIN}  \
 }
 
-#define UNUSED_PINS {B7, D3, D4, D7, E6} // D0, D1
+#define UNUSED_PINS {B7, D3, D4, D7, E6, E4, E5} // D0, D1 - I2C, D6 is an LED?
 
 /* COL2ROW, ROW2COL */
 //#define DIODE_DIRECTION COL2ROW
