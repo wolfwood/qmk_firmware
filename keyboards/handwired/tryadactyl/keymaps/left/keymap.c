@@ -18,6 +18,19 @@
 // XXX figure out how to unify copy paste in firefox, terminal, tmux, emacs
 // XXX figure out how to unify paging in browser, terminal, tmux, man, less, emacs
 
+// Defines the keycodes used by our macros in process_record_user
+enum custom_keycodes {
+  M_BRACES  = SAFE_RANGE, // modifier controlled bracket pair
+  M_BRPM, // bracket
+  M_CBPM, // curly brace
+  M_ABPM, // angle crace
+  M_PRPM, // parens
+  M_SQPM, // single quote
+  M_DQPM, // dopple quote
+  M_BSDEL, // shifted BS is delete
+  M_CCCV, // copy paste
+};
+
 // Defines names for use in layer keycodes and the keymap
 enum layer_names {
     _BASE,
@@ -28,27 +41,23 @@ enum layer_names {
     // copypaste? mousekeys? scrolling?
     //_MOUSE,
     // Mouse Buttons Only (on thumbs leaving letters alone) stick copy/paste somewhere?
-    _MBO
-};
-
-// Defines the keycodes used by our macros in process_record_user
-enum custom_keycodes {
-    QMKBEST = SAFE_RANGE,
-    QMKURL
+    _MBO,
+    _ALB,
+    _MO2,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT_left_hand(
 		     KC_MINS,        KC_1,     KC_2,     KC_3,     KC_4,     KC_5,
-		     KC_DEL,         KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,
-		     LCTL_T(KC_BSPC),KC_A,     KC_S,     KC_D,     KC_F,     KC_G,
+		     KC_RBRC,        KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,
+		     LCTL_T(KC_LBRC),KC_A,     KC_S,     KC_D,     KC_F,     KC_G,
 		     KC_LSPO,        KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,
-		                                                   KC_UP,
- 		                                         KC_LEFT,  KC_SPC,   KC_RGHT,
-		                                                   KC_DOWN,
-		                                         KC_LBRC,            KC_RBRC,
-		                                         KC_BSPC,  KC_SPC,   KC_DEL
+		                                                   ALT_T(KC_UP),
+		                                         SFT_T(KC_LEFT),  KC_SPC,   CTL_T(KC_RGHT),
+		                                                   GUI_T(KC_DOWN),
+   		                                         KC_UNDS,            TG(_MO2),
+		                                         KC_BSPC,  KC_SPC,   M_BRACES
     ),
     /*[_FN] = LAYOUT(
         QMKBEST, QMKURL,  _______,
@@ -63,88 +72,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                                   KC_TRNS,  KC_TRNS,  KC_TRNS,
 		                                             KC_TRNS,
 		                                   KC_WBAK,            KC_WFWD,
-		                                   KC_BTN2,  KC_BTN1,  KC_BTN3
+		                                   KC_BTN3,  KC_BTN1,  KC_BTN2
+    ),
+    [_ALB] = LAYOUT_left_hand(
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_I,     KC_LSFT,  KC_D,     KC_W,     KC_TRNS,
+		     KC_TRNS,  KC_S,     KC_LALT,  KC_R,     KC_Q,     KC_E,
+		     KC_TRNS,  KC_A,     KC_GRV,   KC_F,     KC_SPC,   KC_TRNS,
+		                                             KC_F1,
+		                                   KC_F3,    KC_F1,    KC_F4,
+ 		                                             KC_F2,
+		                                   KC_4,            TG(_ALB),
+		                                   KC_1,     KC_2,     KC_3
+    ),
+    [_MO2] = LAYOUT_left_hand(
+		     KC_V,    KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_P,    KC_TAB,   KC_X,     KC_LALT,  KC_6,     KC_TRNS,
+		     KC_L,    KC_LCTL,  KC_LSFT,  KC_BTN2,  KC_BTN1,  KC_2,
+		     KC_ESC,  KC_SPC,   KC_GRV,   KC_V,     KC_R,     KC_0,
+		                                             KC_W,
+		                                   KC_A,     KC_X,    KC_D,
+ 		                                             KC_S,
+		                                   KC_TRNS,            KC_TRNS,
+		                                   KC_TRNS,  KC_TRNS,  KC_TRNS
     ),
 };
-
-#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
-void mouse_mode(bool);
-
-static uint16_t mh_auto_buttons_timer;
-extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
-
-#endif
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case QMKBEST:
-            if (record->event.pressed) {
-                // when keycode QMKBEST is pressed
-                SEND_STRING("QMK is the best thing ever!");
-            } else {
-                // when keycode QMKBEST is released
-            }
-            break;
-        case QMKURL:
-            if (record->event.pressed) {
-                // when keycode QMKURL is pressed
-                SEND_STRING("https://qmk.fm/\n");
-            } else {
-                // when keycode QMKURL is released
-            }
-            break;
-    }
-
-#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
-    if (mh_auto_buttons_timer) {
-      switch (keycode) {
-      case KC_BTN1:
-      case KC_BTN2:
-      case KC_BTN3:
-      case KC_WBAK:
-      case KC_WFWD:
-	break;
-      default:
-	mouse_mode(false);
-      }
-    }
-#endif
-    return true;
-}
-
-#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
-void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
-  if (mh_auto_buttons_timer) {
-    mh_auto_buttons_timer = timer_read();
-  } else {
-    if (!tp_buttons) {
-      mouse_mode(true);
-  #if defined CONSOLE_ENABLE
-      print("mh_auto_buttons: on\n");
-  #endif
-    }
-  }
-}
-
-void matrix_scan_user(void) {
-  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
-    if (!tp_buttons) {
-      mouse_mode(false);
-  #if defined CONSOLE_ENABLE
-      print("mh_auto_buttons: off\n");
-  #endif
-    }
-  }
-}
-
-void mouse_mode(bool on) {
-  if (on) {
-    layer_on(MH_AUTO_BUTTONS_LAYER);
-    mh_auto_buttons_timer = timer_read();
-  } else {
-    layer_off(MH_AUTO_BUTTONS_LAYER);
-    mh_auto_buttons_timer = 0;
-  }
-}
-
-#endif // defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && #defined MOUSEKEY_ENABLE

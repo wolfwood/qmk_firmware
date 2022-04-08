@@ -28,7 +28,9 @@ enum layer_names {
     // copypaste? mousekeys? scrolling?
     //_MOUSE,
     // Mouse Buttons Only (on thumbs leaving letters alone) stick copy/paste somewhere?
-    _MBO
+    _MBO,
+    _ALB,
+    _MO2,
 };
 
 // Defines the keycodes used by our macros in process_record_user
@@ -44,10 +46,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_BSLS,
 		     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  RCTL_T(KC_QUOT),
 		     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_RSPC,
-		               KC_UP,
-		     KC_LEFT,  KC_ENT,   KC_RGHT,
-		               KC_DOWN,
-		     KC_TILD,            KC_GRV,
+		               RALT_T(KC_PGUP),
+		     KC_RGUI,  KC_ENT,   KC_RSFT,
+		               KC_RCTL,
+		     KC_PGDN,            TG(_MO2),
 		     KC_GESC,  KC_ENT,   KC_TAB
     ),
     /*[_FN] = LAYOUT(
@@ -62,8 +64,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		               KC_TRNS,
 		     KC_TRNS,  KC_TRNS,  KC_TRNS,
 		               KC_TRNS,
-		     KC_WBAK,            KC_WFWD,
+		     KC_WBAK,            KC_TRNS,
 		     KC_BTN2,  KC_BTN1,  KC_BTN3
+    ),
+    [_ALB] = LAYOUT_right_hand(
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		               KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,
+		               KC_TRNS,
+		     KC_TRNS,            KC_TRNS,
+		     KC_BTN3,  KC_BTN2,  KC_BTN1
+    ),
+    [_MO2] = LAYOUT_right_hand(
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+		               KC_TRNS,
+		     KC_TRNS,  KC_TRNS,  KC_TRNS,
+		               KC_TRNS,
+		     KC_Z,               KC_TRNS,
+		     KC_ESC,  KC_BTN1,   KC_BTN2
     ),
 };
 

@@ -163,6 +163,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define PS2_MOUSE_ROTATE 180 /* Compensate for South-facing device orientation. */
 
+#define PS2_MOUSE_SCROLL_DIVISOR_H 4
+#define PS2_MOUSE_SCROLL_DIVISOR_V 4
+
 #ifdef PS2_USE_USART
     #define PS2_CLOCK_PORT  PORTD
     #define PS2_CLOCK_PIN   PIND
