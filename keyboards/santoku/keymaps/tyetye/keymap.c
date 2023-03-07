@@ -22,7 +22,7 @@
  Combos provide easy web browser tab navigation with only the right hand (no reaching for ctrl-blah).
  Home row mod keys (SHFT, CTL, ALT, GUI).
  TAPALTTB for easy switching to open windows using just one key (an improvement on the "Super Alt Tab" example code from the QMK docs).
- "Caps Word" feature intelligently turns off CAPSLOCK when a non alphnumberic key is pressed (wonderful QMK feature).
+ "Caps Word" feature intelligently turns off CAPSLOCK when a non alphnumeric key is pressed (wonderful QMK feature).
  Just for fun: QMK's WPM feature is available on the OLED screen.
  Traditional shift keys in the lower corners are togglable (on or off). This helps the user to ease the transition to home row mods while still allowing the user to be productive during crunch time.
 
@@ -36,7 +36,6 @@
  Create a dedicated "help" screen. This will take a lot of bytes because of raw text. Still uncertain how to approach this.
  Add sidescroll ability to the scrollwheel.
  Slowly make options to test the transition to a 36 key layout (make alternatives to the outer columns)
- -- Make the logo a global variable instead of static in the function (to see if it affects compile size or the compiler is smart enough to incorporate it from the beginning (before the function is ever called?)
  -- Make ALTTAB delay variable and add ALTTAB timeout setting to settings page (yet another reason to have a dedicated settings page.
  -- Add custom Santoku logo to the OLED.
 
@@ -72,13 +71,13 @@ enum santoku_keycodes {
 
 #define ___x___ XXXXXXX
 
-// One tap alt-tab controls. Using the code example from: https://docs.qmk.fm/#/feature_macros?id=super-alt%e2%86%aftab
+// One tap alt-tab controls. Improvement to the code example from: https://docs.qmk.fm/#/feature_macros?id=super-alt%e2%86%aftab
 bool     is_alt_tab_pressed    = false;
 uint16_t alt_tab_timer         = 0;
 const uint16_t ALT_TAB_TIMEOUT = 300;
 
 // toggles the typical shift keys (in lower corners). Useful when learning to use homerow mod's shift keys but still need to be productive at day job.
-bool normal_shift_key_active = false;
+bool normal_shift_key_active = true;
 
 // Trackpoint/mouse pointer dynamic speed controls and GUI/OLED settings
 uint8_t acceleration_setting        = 2;
@@ -199,7 +198,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FUNCTION] =
     {/*FUNCTION*/
-        {XXXXXXX, XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
+        {KC_TAB,  XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
         {KC_ESC,  LGUI_T(KC_F1), RALT_T(KC_F2),          LCTL_T(KC_F3),          LSFT_T(KC_F4),     KC_F5,             KC_F6,                 RSFT_T(KC_F7),         RCTL_T(KC_F8), RALT_T(KC_F9), RGUI_T(KC_F10), XXXXXXX},
         {_______, XXXXXXX,       XXXXXXX,                XXXXXXX,                XXXXXXX,           XXXXXXX,           KC_F11,                KC_F12,                XXXXXXX,       XXXXXXX, XXXXXXX, _______},
         {___x___, ___x___,       ___x___,                KC_DEL,                 KC_SPC,            OVERVIEW,          XXXXXXX,               XXXXXXX,               QK_BOOT,       ___x___, ___x___, ___x___}}
@@ -331,11 +330,12 @@ bool oled_task_user(void) {
         0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00};
     if (show_vanity_text) {
         uint32_t vanity_timeout = 10000;
-        oled_write_P(qmk_logo, false);
+        oled_write_ln_P(PSTR("   Santoku Keyboard"), false);
         oled_write_ln_P(PSTR("        by Tye"), false);
         oled_write_ln_P(PSTR("   gestaltinput.com"), false);
         oled_write_ln_P(PSTR(""), false);
         oled_write_ln_P(PSTR("     Hello, World"), false);
+        oled_write_P(qmk_logo, false);
         if (timer_read() > vanity_timeout) {
             show_vanity_text = false;
         }
@@ -359,11 +359,11 @@ bool oled_task_user(void) {
                 oled_write_ln_P(PSTR("TB  qwert | yuiop\\"), false);
                 oled_write_ln_P(PSTR("ES  asdfg | hjkl;'"), false);
                 oled_write_ln_P(PSTR("SH  zxcvb | nm,./"), false);
-                oled_write_P(qmk_logo, false);
+                //oled_write_P(qmk_logo, false);
                 break;
 
             case _SYMBOL:
-                oled_write_P(PSTR("       Symbol       \n"), true);
+                oled_write_P(   PSTR("       Symbol       \n"), true);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(" `  !@#$% | ^&*()-"), false);
                 oled_write_ln_P(PSTR("ES  12345 | 67890="), false);
@@ -374,7 +374,7 @@ bool oled_task_user(void) {
                 break;
 
             case _NAVIGATION:
-                oled_write_P(PSTR("      Navigation    \n"), true);
+                oled_write_P(   PSTR("      Navigation    \n"), true);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR("   | HM PD PU EN"), false);
                 oled_write_ln_P(PSTR("   | << vv ^^ >>"), false);
@@ -385,23 +385,23 @@ bool oled_task_user(void) {
                 break;
 
             case _FUNCTION:
-                oled_write_P(PSTR(" Function & Settings\n"), true);
-                oled_write_P(PSTR("SCROLLWHEEL TEST:"), false);
+                oled_write_P(   PSTR(" Function & Settings\n"), true);
+                oled_write_P(   PSTR("SCROLLWHEEL TEST:"), false);
                 oled_write(get_u8_str(scroll_wheel_test_setting, ' '), false);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR("     -+-+ | -+A"), false);
                 oled_write_ln_P(PSTR("ES F12345 | 67890"), false);
                 oled_write_ln_P(PSTR("CL F      | ab"), false);
-                oled_write_P(PSTR("TP Accl W/E "), false);
+                oled_write_P(   PSTR("TP Accl W/E "), false);
                 oled_write_ln(progress_bars[acceleration_setting], false);
-                oled_write_P(PSTR("TP Spd  R/T "), false);
+                oled_write_P(   PSTR("TP Spd  R/T "), false);
                 oled_write_ln(progress_bars[linear_reduction_setting], false);
-                oled_write_P(PSTR("TP Scrl Y/U "), false);
+                oled_write_P(   PSTR("TP Scrl Y/U "), false);
                 oled_write_ln(progress_bars[drag_scroll_speed_setting], false);
                 break;
 
             default:
-                oled_write_ln_P(PSTR("Undefined"), false);
+                oled_write_ln_P(PSTR("If you see this there's a bug in the layer code :)"), false);
         }
     }
 
@@ -414,6 +414,7 @@ void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
     // The math below turns the Trackpoint x and y reports (movements) into a vector and scales the vector with some trigonometry.
     // This allows the user to dynamically adjust the mouse cursor sensitivity to their liking.
     // It also results in arguably smoother movement than just multiplying the x and y values by some fixed value.
+    // (and yeah, there's some unnecessary/redundant math going here. I'm hoping to lay the foundation for things like software adjustable negative inertia.)
     if (mouse_report->x != 0 || mouse_report->y != 0) {
         float hypotenuse        = sqrt((mouse_report->x * mouse_report->x) + (mouse_report->y * mouse_report->y));
         float scaled_hypotenuse = pow(hypotenuse, acceleration_values[acceleration_setting]) / linear_reduction_values[linear_reduction_setting];
@@ -440,6 +441,7 @@ void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
    scrollwheel spinning. The code in encoder_update_user is a quick and dirty
    attempt to try a few different methods to smooth out the variations in the 
    scrollwheel readings. (It will *not* increase the actual polling rate)
+   I believe this delay is deep in the QMK implementation. Also PS2 is a crotchety old standard.
 */
 bool encoder_update_user(uint8_t index, bool clockwise) {
     // float step_values[10] = {2.0, 2.0, 1.8, 1.8, 1.6, 1.6, 1.4, 1.4, 1.2, 1.0};
@@ -452,24 +454,50 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     // float step_values[10] = { .40, .40, .35, 0.35, 0.30, 0.30, 0.25, 0.25, 0.20, 0.20};
     // float step_values[11] = {2.0, 1,8, 1.6, 1.4, 1.2, 1.0, 0.8, 0.6, 0.4, 0.2};
     // float step_values[10] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
+
+    //wait_ms(10);
     float step_values[10] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2};
-    report_mouse_t currentReport = pointing_device_get_report();
+    report_mouse_t currentReport     = pointing_device_get_report();
+
     static uint16_t encoder_timer    = 0;
     static uint16_t timer_difference = 0;
+    static uint16_t hard_delay_max   = 30;
+    static bool previous_direction;
+
     timer_difference = timer_elapsed(encoder_timer);
-    if (timer_difference < 20) {
-        wait_ms(20 - timer_difference);
-    }
-    static bool clockwise_previous = 0;
-    if (timer_difference < 50 && clockwise != clockwise_previous) {
-        clockwise = clockwise_previous;
+
+    //if (timer_difference > 50) return true;
+
+    //if (clockwise != previous_direction && timer_difference < 50 ) {
+    if (clockwise != previous_direction && timer_difference < 30 ) {
+        clockwise = previous_direction;
     }
 
+    oled_write_P(PSTR("delay:"), false);
+    oled_write_ln(get_u8_str(timer_difference, ' '), false);
+
+    if (timer_difference < hard_delay_max) {
+        wait_ms(hard_delay_max - timer_difference);
+        //wait_ms(hard_delay_max);
+        //wait_ms(hard_delay_max);
+    }
+    /*
+    if (timer_difference < hard_delay_max-10) {
+        wait_ms(hard_delay_max-10 );
+    }
+    else if (timer_difference < hard_delay_max-5) {
+        wait_ms(hard_delay_max-5 );
+    }
+    else if (timer_difference < hard_delay_max) {
+        wait_ms(hard_delay_max);
+    }
+    */
     if (scroll_wheel_test_setting == DEFAULT) {
-        currentReport.v = .1 * (clockwise ? 1.0 : -1.0);
+        //currentReport.v = (clockwise ? 1.0 : -1.0);
+        //currentReport.v = 0 * (clockwise ? 1.0 : -1.0);
     }
     else if (scroll_wheel_test_setting == DEFAULT_FASTER) {
-        currentReport.v = .2 * (clockwise ? 1.0 : -1.0);
+        currentReport.v = 0 * (clockwise ? 1.0 : -1.0);
     }
     else if (scroll_wheel_test_setting == FANCY) {
         currentReport.v = step_values[ timer_difference / 10] * (clockwise ? 1.0 : -1.0);
@@ -480,6 +508,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     pointing_device_set_report(currentReport);
     pointing_device_send();
     encoder_timer = timer_read();
+    previous_direction = clockwise;
     return true;
 }
 #endif

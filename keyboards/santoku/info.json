@@ -1,7 +1,13 @@
 {
-    "keyboard_name": "Santoku Gen 2",
-    "maintainer": "TyeTye",
-    "url": "https://www.reddit.com/r/ErgoMechKeyboards/comments/oisnad/i_made_this_santoku_gen_2_trackpoint_as_a/",
+    "keyboard_name": "Santoku",
+    "manufacturer": "Gestalt Input",
+    "url": "https://www.gestaltinput.com",
+    "maintainer": "tyetye",
+    "usb": {
+        "vid": "0xC1ED",
+        "pid": "0x23B0",
+        "device_version": "1.0.0"
+    },
     "layouts": {
         "LAYOUT": {
             "layout": [
@@ -49,5 +55,15 @@
                 { "label": "Enter", "x": 10, "y": 3.75 }
             ]
         }
+    },
+    "diode_direction": "COL2ROW",
+    "matrix_pins": {
+        "cols": [ "F1", "F0", "B6", "B2", "B3", "B1", "C7", "E6", "B7", "B5", "B4", "C6" ],
+        "rows": [ "F4", "F5", "F6", "F7" ]
+    },
+    "encoder": {
+        "rotary": [
+            { "pin_a": "D4", "pin_b": "D7", "resolution": 1 }
+        ]
     }
 }

@@ -19,22 +19,24 @@
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
+/*
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x6464
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Tye
 #define PRODUCT         Santoku
+*/
 
 /* diode direction */
-#define DIODE_DIRECTION COL2ROW
+//#define DIODE_DIRECTION COL2ROW
 
 /* key matrix size */
 #define MATRIX_ROWS 4
 #define MATRIX_COLS 12
 
-#define MATRIX_COL_PINS { F1, F0, B6, B2, B3, B1, C7, E6, B7, B5, B4, C6 }
-#define MATRIX_ROW_PINS { F4, F5, F6, F7 }
-#define UNUSED_PINS
+//#define MATRIX_COL_PINS { F1, F0, B6, B2, B3, B1, C7, E6, B7, B5, B4, C6 }
+//#define MATRIX_ROW_PINS { F4, F5, F6, F7 }
+//#define UNUSED_PINS
 
 #define LAYER_STATE_8BIT  //  Tells QMK that keymap has fewer than 8 layers. Saves about 660 bytes. Remove if using more than 8 layers
 
@@ -43,9 +45,9 @@
 #define OLED_DISPLAY_128X64
 
 // Configure rotary encoder
-#define ENCODERS_PAD_A { D4 }
-#define ENCODERS_PAD_B { D7 }
-#define ENCODER_RESOLUTION 1
+//#define ENCODERS_PAD_A { D4 }
+//#define ENCODERS_PAD_B { D7 }
+//#define ENCODER_RESOLUTION 1
 //#define ENCODER_DEFAULT_POS 0x1
 
 //#ifdef PS2_MOUSE_ENABLE
