@@ -456,7 +456,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     // float step_values[10] = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 
     //wait_ms(10);
-    float step_values[10] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2};
+    float step_values[10] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.2};
     report_mouse_t currentReport     = pointing_device_get_report();
 
     static uint16_t encoder_timer    = 0;
