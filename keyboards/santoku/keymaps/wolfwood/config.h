@@ -23,7 +23,7 @@
 
 // defines for combos feature (press two keys at one time to trigger an event)
 #define COMBO_TERM  40  /* time limit in milliseconds combos need to be completed */
-#define COMBO_COUNT 8
+//#define COMBO_COUNT 8
 
 // defines to help make home row mods more reliable
 #define TAPPING_TOGGLE 2  /* How many times TT(__layer__) needs to be tapped to stick */

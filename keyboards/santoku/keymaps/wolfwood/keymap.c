@@ -50,23 +50,20 @@
 // Santoku keymap set up
 enum santoku_layers {
     _QWERTY,
+    _TARMAKDH1,
     _SYMBOL,
     _NAVIGATION,
-    _FUNCTION };
+    _FUNCTION,
+    _MOUSE
+};
 
 enum santoku_keycodes {
-    QWERTY = SAFE_RANGE,
-    SYMBOL,
-    NAVIGATION,
-    FUNC,
-    OVERVIEW,
-    DEC_ACCL,
+    DEC_ACCL = SAFE_RANGE,
     INC_ACCL,
     DEC_SPED,
     INC_SPED,
     DEC_DRGS,
     INC_DRGS,
-    SHFT_KEY,
     TAPALTTB,
     A_B_TEST };
 
@@ -81,11 +78,11 @@ const uint16_t ALT_TAB_TIMEOUT = 300;
 bool normal_shift_key_active = false;
 
 // Trackpoint/mouse pointer dynamic speed controls and GUI/OLED settings
-uint8_t acceleration_setting        = 3;
+uint8_t acceleration_setting        = 4;
 float   acceleration_values[6]      = {0.6, 0.8, 1, 1.2, 1.4, 1.6};
-uint8_t linear_reduction_setting    = 3;
+uint8_t linear_reduction_setting    = 4;
 float   linear_reduction_values[6]  = {2.4, 2.2, 2.0, 1.8, 1.6, 1.4};
-uint8_t drag_scroll_speed_setting   = 3;
+uint8_t drag_scroll_speed_setting   = 4;
 uint8_t drag_scroll_speed_values[6] = {8, 7, 6, 5, 4, 3};
 char *  progress_bars[6]            = {"[=     ]", "[==    ]", "[===   ]", "[====  ]", "[===== ]", "[=PLAID]"};
 uint8_t scroll_wheel_test_setting   = 0;
@@ -96,42 +93,80 @@ enum scroll_wheel_setting{
     FANCY2
 };
 
+// Shift + Backspace = Del
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LT(_NAVIGATION, KC_BSPC), KC_DEL);
+
+// Shift + esc = ~
+const key_override_t tilde_esc_override = ko_make_basic(MOD_MASK_SHIFT, LT(_FUNCTION, KC_ESC), S(KC_GRV));
+
+// GUI + esc = `
+const key_override_t grave_esc_override = ko_make_basic(MOD_MASK_GUI, LT(_FUNCTION, KC_ESC), KC_GRV);
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+  	&delete_key_override,
+	&tilde_esc_override,
+	&grave_esc_override,
+	NULL
+};
+
+
 // Combo stuff
 enum combos {
-    COMBO_MCOMMADOT_FORWARDHISTORY,
+  COMBO_FG,
+  COMBO_HJ,
+  /*    COMBO_MCOMMADOT_FORWARDHISTORY,
     COMBO_NMCOMM_BACKHISTORY,
     COMBO_HJK_CLOSETAB,
     COMBO_YUI_PREVTAB,
     COMBO_UIO_NEXTTAB,
     COMBO_GH_CAPSLOCK,
     COMBO_UI_ESCAPE,
-    COMBO_FG_TAB,
-    NUM_COMBOS    // make sure this is always the final element in the combos enum
+    COMBO_FG_TAB,*/
+  //COMBO_COUNT
+  //NUM_COMBOS    // make sure this is always the final element in the combos enum
                   // TODO: get rid of QMK's static value for this because I'm editing it too often and forgetting during debugging!!!!!!
 };
 
-const uint16_t PROGMEM combo_yui[]       = {KC_Y, KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_fg[]       = {LCTL_T(KC_F), KC_G, COMBO_END};
+const uint16_t PROGMEM combo_hj[]        = {RCTL_T(KC_J), KC_H, COMBO_END};
+/*const uint16_t PROGMEM combo_yui[]       = {KC_Y, KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_uio[]       = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_hjk[]       = {KC_H, RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
 const uint16_t PROGMEM combo_nmcomm[]    = {KC_N, KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo_mcommadot[] = {KC_M, KC_COMMA, KC_DOT, COMBO_END};
-const uint16_t PROGMEM combo_gh[]        = {KC_G, KC_H, COMBO_END};
+
+
+klkconst uint16_t PROGMEM combo_gh[]        = {KC_G, KC_H, COMBO_END};
 const uint16_t PROGMEM combo_ui[]        = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_fg[]        = {LSFT_T(KC_F), KC_G, COMBO_END};
-combo_t key_combos[NUM_COMBOS] = {
-    [COMBO_UIO_NEXTTAB] = COMBO_ACTION(combo_uio),
+const uint16_t PROGMEM combo_fg[]        = {LSFT_T(KC_F), KC_G, COMBO_END};*/
+combo_t key_combos[] = {
+  [COMBO_FG] = COMBO_ACTION(combo_fg),
+  [COMBO_HJ] = COMBO_ACTION(combo_hj)
+  /*    [COMBO_UIO_NEXTTAB] = COMBO_ACTION(combo_uio),
     [COMBO_YUI_PREVTAB] = COMBO_ACTION(combo_yui),
     [COMBO_HJK_CLOSETAB] = COMBO_ACTION(combo_hjk),
     [COMBO_NMCOMM_BACKHISTORY] = COMBO_ACTION(combo_nmcomm),
     [COMBO_MCOMMADOT_FORWARDHISTORY] = COMBO_ACTION(combo_mcommadot),
     [COMBO_GH_CAPSLOCK] = COMBO_ACTION(combo_gh),
     [COMBO_UI_ESCAPE] = COMBO_ACTION(combo_ui),
-    [COMBO_FG_TAB] = COMBO_ACTION(combo_fg)
+    [COMBO_FG_TAB] = COMBO_ACTION(combo_fg)*/
 };
 
+uint16_t COMBO_LEN = ARRAY_SIZE(key_combos);
+
 void process_combo_event(uint16_t combo_index, bool pressed) {
-    switch (combo_index) {
-        case COMBO_UI_ESCAPE:
+  switch (combo_index) {
+    case COMBO_FG:
+      if (pressed) {
+	tap_code16(KC_HOME);
+      }
+      break;
+    case COMBO_HJ:
+      if (pressed) {
+	tap_code16(KC_END);
+      }
+      break;
+      /*case COMBO_UI_ESCAPE:
             if (pressed) {
                 tap_code16(KC_ESC);
             }
@@ -170,7 +205,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(KC_TAB);
             }
             break;
-    }
+	    */
+  }
 }
 
 // Santoku keymap layout
@@ -178,45 +214,56 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] =
     {/*QWERTY*/
-        {KC_TAB,   KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_BSLS},
-        {KC_ESC,   RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_QUOT},
-        {CAPSWRD, KC_Z,         KC_X,         KC_C,                   KC_V,         KC_B,         KC_N,            KC_M,            KC_COMM,      KC_DOT,       KC_SLSH,         SHFT_KEY},
-        {___x___,  ___x___,      ___x___,      LT(_NAVIGATION, KC_BSPC), LT(_SYMBOL, KC_SPC),       LT(_FUNCTION, KC_TAB),     CAPSWRD, LT(_SYMBOL, KC_ENT),     KC_TAB,       ___x___,      ___x___,         ___x___}},
+      {TG(_NAVIGATION),KC_Q,    KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_BSLS},
+        {KC_MINS, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_QUOT},
+        {CW_TOGG, KC_Z,         KC_X,         KC_C,                   KC_V,         KC_B,         KC_N,            KC_M,            KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS},
+        {___x___,  ___x___,     ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, KC_ESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},
+
+    [_TARMAKDH1] ={
+      {_______,  _______,  _______,  KC_J,     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
+      {_______,  _______,  _______,  _______,  _______,  _______, KC_M,RCTL_T(KC_N),RSFT_T(KC_E),_______,  _______,  _______},
+      {_______,  _______,  _______,  _______,  _______,  _______,  KC_K,     KC_H,     _______,  _______,  _______,  _______},
+      {___x___,  ___x___,  ___x___,  _______,  _______,  _______,  _______,  _______,  _______,  ___x___,  ___x___,  ___x___}
+    } ,
 
     [_SYMBOL] =
     {/*SYMBOL*/
         {KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_MINS},
-        {KC_ESC,  RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL},
-        {_______, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, KC_RBRC,      KC_COMM,      KC_DOT,       KC_SLSH,      _______},
-        {___x___, ___x___,      ___x___,      KC_BSPC,      KC_SPC,       OVERVIEW, _______, _______,      KC_ENT,       ___x___,      ___x___,      ___x___}},
+        {KC_MINS, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL},
+        {KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, KC_RBRC,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE},
+        {___x___, ___x___,      ___x___,      _______,      _______,      _______,  _______, _______,      _______,      ___x___,      ___x___,      ___x___}},
 
     [_NAVIGATION] =
     {/*NAVIGATION*/
-        {KC_TAB,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_END,               XXXXXXX, XXXXXXX},
-        {KC_ESC,  KC_RALT, KC_LGUI, KC_LSFT, KC_LCTL, XXXXXXX, KC_LEFT,       KC_LEFT,       KC_RGHT,              KC_RGHT,              XXXXXXX, XXXXXXX},
-        {_______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  LGUI(KC_LBRC), KC_DOWN, KC_UP, LGUI(LSFT(KC_MINS)),  XXXXXXX, _______},
-        {___x___, ___x___,  ___x___,  KC_DEL,   KC_SPC,   OVERVIEW, _______,       _______,       KC_ENT,             ___x___,              ___x___, ___x___}},
+      {TG(_NAVIGATION),XXXXXXX,XXXXXXX,XXXXXXX, XXXXXXX,  XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_UP,                XXXXXXX, XXXXXXX},
+        {KC_ESC,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              XXXXXXX, XXXXXXX},
+        {_______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       KC_DOWN,       KC_UP,              XXXXXXX,              XXXXXXX, _______},
+        {___x___, ___x___,  ___x___,  _______,  _______,  _______,  _______,       _______,       _______,            ___x___,              ___x___, ___x___}},
 
     [_FUNCTION] =
     {/*FUNCTION*/
-        {XXXXXXX, XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
+      {TG(_TARMAKDH1), XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
         {KC_ESC,  RALT_T(KC_F1), LGUI_T(KC_F2),          LSFT_T(KC_F3),          LCTL_T(KC_F4),     KC_F5,             KC_F6,                 RCTL_T(KC_F7),         RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX},
         {_______, XXXXXXX,       XXXXXXX,                XXXXXXX,                XXXXXXX,           XXXXXXX,           KC_F11,                KC_F12,                XXXXXXX,       XXXXXXX, XXXXXXX, _______},
-        {___x___, ___x___,       ___x___,                KC_DEL,                 KC_SPC,            OVERVIEW,          XXXXXXX,               XXXXXXX,               QK_BOOT,       ___x___, ___x___, ___x___}}
+        {___x___, ___x___,       ___x___,                KC_DEL,                 KC_SPC,            XXXXXXX,           XXXXXXX,               XXXXXXX,               QK_BOOT,       ___x___, ___x___, ___x___}},
+
+    [_MOUSE] ={
+      {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
+      {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
+      {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
+      {___x___,  ___x___,  ___x___,  KC_BTN3,  KC_BTN1,  KC_BTN2,  KC_BTN2,  KC_BTN1,  KC_BTN3,  ___x___,  ___x___,  ___x___}
+    }
 };
+
+/*
+void pointing_device_init_user(void) {
+    set_auto_mouse_layer(_MOUSE); // only required if AUTO_MOUSE_DEFAULT_LAYER is not set to index of <mouse_layer>
+    set_auto_mouse_enable(true);         // always required before the auto mouse feature will work
+}
+*/
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case SHFT_KEY:
-            if (normal_shift_key_active) {
-                if (record->event.pressed) {
-                    register_code(KC_LSFT);
-                } else {
-                    unregister_code(KC_LSFT);
-                }
-            }
-            return true; // Let QMK send the press/release events
-            break;
 
         case DEC_ACCL:
             if (record->event.pressed) {
@@ -270,19 +317,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true; // Let QMK send the press/release events
-            break;
-
-        case OVERVIEW:
-            // Macro to handle overview mode. Enter overview, wait, then skip to window after current window
-            if (record->event.pressed) {
-                register_code(KC_LGUI);
-                tap_code(KC_F5);
-                unregister_code(KC_LGUI);
-                //wait_ms(500);
-                tap_code(KC_RIGHT);
-                tap_code(KC_RIGHT);
-            }
-            return true;
             break;
 
         case TAPALTTB: // Improved on but inspired by: https://github.com/qmk/qmk_firmware/blob/master/keyboards/dz60/keymaps/_bonfire/not-in-use/super-alt-tab.c
