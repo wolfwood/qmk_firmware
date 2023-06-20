@@ -111,3 +111,4 @@ compile_commands.json
 # VIA(L) json files that don't belong in QMK repo
 via*.json
 keyboards/svalboard/keymaps/tester/keymap.c
+keyboards/svalboard/test.json
