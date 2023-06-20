@@ -35,12 +35,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DOUBLEDOWN_COL 5 // need a pullup on COL6
 
 #define SERIAL_DEBUG
-//#define SPLIT_TRANSPORT_MIRROR
-//#define SPLIT_LAYER_STATE_ENABLE
-//#define SPLIT_POINTING_ENABLE
-//#define SPLIT_ACTIVITY_ENABLE
-//#define SPLIT_LED_STATE_ENABLE
-//#define SPLIT_MODS_ENABLE
 #define SERIAL_USART_TX_PIN GP0 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500 // Timeout window in ms in which the double tap can occur.

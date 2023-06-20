@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
-
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -42,8 +41,7 @@ enum layer {
     NUM_LAYERS
 };
 
-/* Declared weak so that it can easily be overridden. */
-__attribute__((weak)) const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
+const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
  [NORMAL] = LAYOUT(
              /*Center           North           East            South           West*/
         /*R1*/ KC_J,            KC_U,           KC_QUOTE,       KC_M,           KC_H,
