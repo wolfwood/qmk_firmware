@@ -30,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //S E D N W None
 //Both Thumbs (these are same as lalboard_v2)
 //OL OU D IL MODE DOUBLE
+//Knuckle Nail Down Pad Up Double
 
 #define MATRIX_COL_PUSHED_STATES { 0, 0, 1, 0, 0, 0 }
 #define DOUBLEDOWN_COL 5 // need a pullup on COL6
