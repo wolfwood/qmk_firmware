@@ -65,11 +65,11 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
         /*R2*/ KC_UP,           KC_WH_U,        XXXXXXX,        KC_MS_U,        LCTL(KC_UP),
         /*R3*/ KC_DOWN,         KC_WH_D,        XXXXXXX,        KC_MS_D,        LCTL(KC_DOWN),
         /*R4*/ KC_RIGHT,        KC_WH_R,        XXXXXXX,        KC_MS_R,        LCTL(KC_RIGHT),
-//mirror right alphas while holding Normal key for easy access while mousing (e.g. CAD)
-        /*L1*/ KC_J,            KC_U,           KC_QUOTE,       KC_M,           KC_H,
-        /*L2*/ KC_K,            KC_I,           KC_COLON,       KC_COMMA,       KC_Y,
-        /*L3*/ KC_L,            KC_O,           KC_LGUI,        KC_DOT,         KC_N,
-        /*L4*/ KC_SEMICOLON,    KC_P,           KC_BSLS,        KC_SLASH,       KC_RBRC,
+
+        /*L1*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN1,        XXXXXXX,
+        /*L2*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN2,        XXXXXXX,
+        /*L3*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN3,        XXXXXXX,
+        /*L4*/ DF(NORMAL),      _______,        _______,        XXXXXXX,       _______,
 
         /*Down                  Inner           Upper           Outer Upper     Outer Lower  Pushthrough*/
         /*RT*/ _______,         _______,        _______,        _______,        _______, _______,
