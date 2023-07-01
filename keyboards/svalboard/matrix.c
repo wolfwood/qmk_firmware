@@ -91,7 +91,7 @@ void matrix_read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     matrix_row_t current_row_value = 0;
 
     select_row(current_row);
-    wait_us(30);
+    wait_us(60);
 
     // For each col...
     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
@@ -102,7 +102,7 @@ void matrix_read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 
     // Unselect row
     unselect_row(current_row);
-    wait_us(30);
+    wait_us(60);
 
     // Update the matrix
     current_matrix[current_row] = current_row_value;
