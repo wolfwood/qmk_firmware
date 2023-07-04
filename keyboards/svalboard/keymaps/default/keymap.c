@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
         /*L3*/ KC_S,            KC_W,           KC_B,           KC_X,           KC_ESC,
         /*L4*/ KC_A,            KC_Q,           KC_LBRC,        KC_Z,           KC_DEL,
 
-        /*Down                  Inner           Upper           Outer Upper     Outer Lower  Pushthrough*/  
+        /*Down                  Inner (pad)     Upper (Mode)    O.Upper (nail)  OL (knuckle) Pushthrough*/  
         /*RT*/ MO(NAS),         KC_SPACE,       TO(FUNC),       KC_BSPC,        KC_LALT,     TG(NAS),
         /*LT*/ KC_LSFT,         KC_ENTER,       KC_NORMAL_HOLD, KC_TAB,         KC_LCTL,     KC_CAPS
     ),
@@ -62,8 +62,8 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
     [NORMAL_HOLD] = LAYOUT(
              /*Center           North           East            South           West*/
         /*R1*/ KC_LEFT,         KC_WH_L,        XXXXXXX,        KC_MS_L,        LCTL(KC_LEFT),
-        /*R2*/ KC_UP,           KC_WH_U,        XXXXXXX,        KC_MS_U,        LCTL(KC_UP),
-        /*R3*/ KC_DOWN,         KC_WH_D,        XXXXXXX,        KC_MS_D,        LCTL(KC_DOWN),
+        /*R2*/ KC_DOWN,         KC_WH_D,        XXXXXXX,        KC_MS_D,        LCTL(KC_DOWN),
+        /*R3*/ KC_UP,           KC_WH_U,        XXXXXXX,        KC_MS_U,        LCTL(KC_UP),
         /*R4*/ KC_RIGHT,        KC_WH_R,        XXXXXXX,        KC_MS_R,        LCTL(KC_RIGHT),
 
         /*L1*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN1,        XXXXXXX,
