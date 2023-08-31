@@ -24,6 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "print.h"
 
 #define ROWS_PER_HAND 5
+#define PS2_RESET_PIN GP25
+
 
 // matrix code
 const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
@@ -121,6 +123,7 @@ void matrix_init_custom(void) {
             }
         }
     }
+    setPinOutput_writeLow(PS2_RESET_PIN); // turn off RESET signal for Trackpoint (active high reset on 8707-51)
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
