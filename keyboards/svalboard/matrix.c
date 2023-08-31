@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "print.h"
 
 #define ROWS_PER_HAND 5
-#define PS2_RESET_PIN GP25
+
 
 
 // matrix code
