@@ -123,7 +123,7 @@ void matrix_init_custom(void) {
             }
         }
     }
-    setPinOutput_writeLow(PS2_RESET_PIN); // turn off RESET signal for Trackpoint (active high reset on 8707-51)
+    setPinOutput_writeLow(GP25); // turn off RESET signal for Trackpoint (active high reset on 8707-51)
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {

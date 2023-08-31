@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define SERIAL_PIO_USE_PIO1
 #define PS2_PIO_USE_PIO1
-#define PS2_RESET_PIN GP25
+//#define PS2_RESET_PIN GP25
 
 #define SERIAL_DEBUG
 #define SERIAL_USART_TX_PIN GP0 
