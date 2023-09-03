@@ -35,7 +35,7 @@
   "processor": "RP2040",                                                                  
   "split": {                                                                              
       "enabled": true,                                                                    
-      "main": "eeprom",                                                                   
+      "main": "left",                                                                   
       "transport": {                                                                      
           "protocol": "serial",                                                           
           "sync_matrix_state": false,                                                     

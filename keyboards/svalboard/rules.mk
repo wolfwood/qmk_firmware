@@ -1,6 +1,7 @@
 # MCU name
 MCU = RP2040
 BOOTLOADER = rp2040
+BOARD = GENERIC_RP_RP2040
 
 CUSTOM_MATRIX = lite
 SRC += matrix.c
