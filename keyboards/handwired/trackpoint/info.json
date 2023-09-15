@@ -8,7 +8,7 @@
         "pid": "0x5678",
         "device_version": "0.0.1"
     },
-    "processor": "atmega32u4",
+    "processor": "at90usb1286",
     "bootloader": "halfkay",
     "layouts": {
         "LAYOUT": {
