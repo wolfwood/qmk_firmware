@@ -63,3 +63,10 @@
 #define MOUSEKEY_WHEEL_TIME_TO_MAX	40	// Time until maximum scroll speed is reached
 
 //#define WPM_LAUNCH_CONTROL    // https://docs.qmk.fm/#/feature_wpm?id=word-per-minute-wpm-calculcation
+#define MH_AUTO_BUTTONS
+
+//#ifdef MH_AUTO_BUTTONS
+  #define MH_AUTO_BUTTONS_LAYER _MOUSE
+  #define MH_AUTO_BUTTONS_TIMEOUT 650
+  #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default */
+//#endif

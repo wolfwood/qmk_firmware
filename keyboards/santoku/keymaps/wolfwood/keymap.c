@@ -249,10 +249,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_MOUSE] ={
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
+      {_______,  _______,  KC_BTN2,  KC_BTN3,  KC_BTN1,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
-      {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
-      {___x___,  ___x___,  ___x___,  KC_BTN3,  KC_BTN1,  KC_BTN2,  KC_BTN2,  KC_BTN1,  KC_BTN3,  ___x___,  ___x___,  ___x___}
-    }
+      {___x___,  ___x___,  ___x___,  _______,  _______,  _______,  _______,  _______,  _______,/*KC_BTN2,  KC_BTN1,  KC_BTN3,*/  ___x___,  ___x___,  ___x___}}
 };
 
 /*
@@ -262,8 +261,31 @@ void pointing_device_init_user(void) {
 }
 */
 
+//#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+void mouse_mode(bool);
+
+static uint16_t mh_auto_buttons_timer;
+extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
+
+//#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  //#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+  if (mh_auto_buttons_timer) {
     switch (keycode) {
+    case KC_BTN1:
+    case KC_BTN2:
+    case KC_BTN3:
+    case KC_WBAK:
+    case KC_WFWD:
+      break;
+    default:
+      mouse_mode(false);
+    }
+  }
+  //#endif
+
+  switch (keycode) {
 
         case DEC_ACCL:
             if (record->event.pressed) {
@@ -344,11 +366,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// This is currently only used for the TAPALTTB feature
 void matrix_scan_user(void) {
-    if (!is_alt_tab_pressed && timer_elapsed(alt_tab_timer) > ALT_TAB_TIMEOUT) {
-        unregister_code(KC_LALT);
+  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
+    if (!tp_buttons) {
+      mouse_mode(false);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: off\n");
+  #endif
     }
+  }
+}
+
+void mouse_mode(bool on) {
+  if (on) {
+    layer_on(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = timer_read();
+  } else {
+    layer_off(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = 0;
+  }
 }
 
 #ifdef OLED_ENABLE
@@ -396,7 +432,7 @@ bool oled_task_user(void) {
                 oled_write_P(qmk_logo, false);
                 break;
 
-            case _SYMBOL:
+	    case _SYMBOL:
                 oled_write_P(PSTR("       Symbol       \n"), true);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(" `  !@#$% | ^&*()-"), false);
@@ -413,6 +449,17 @@ bool oled_task_user(void) {
                 oled_write_ln_P(PSTR("   | HM PD PU EN"), false);
                 oled_write_ln_P(PSTR("   | << vv ^^ >>"), false);
                 oled_write_ln_P(PSTR("   | D[ D] D+ D-"), false);
+                oled_write_ln_P(PSTR(""), false);
+                oled_write_ln_P(PSTR(""), false);
+                oled_write_ln_P(PSTR(""), false);
+                break;
+
+            case _MOUSE:
+                oled_write_P(PSTR("       Mouse      \n"), true);
+                oled_write_ln_P(PSTR(""), false);
+                oled_write_ln_P(PSTR(""), false);
+                oled_write_ln_P(PSTR(""), false);
+                oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(""), false);
@@ -445,6 +492,16 @@ bool oled_task_user(void) {
 
 
 void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
+    if (mh_auto_buttons_timer) {
+    mh_auto_buttons_timer = timer_read();
+  } else {
+      if (!tp_buttons/* && !IS_LAYER_ON(_ALB) && !IS_LAYER_ON(_MO2)*/) {
+      mouse_mode(true);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: on\n");
+  #endif
+    }
+  }
     // The math below turns the Trackpoint x and y reports (movements) into a vector and scales the vector with some trigonometry.
     // This allows the user to dynamically adjust the mouse cursor sensitivity to their liking.
     // It also results in arguably smoother movement than just multiplying the x and y values by some fixed value.
