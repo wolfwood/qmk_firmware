@@ -69,13 +69,7 @@ enum santoku_keycodes {
 
 #define ___x___ XXXXXXX
 
-// One tap alt-tab controls. Using the code example from: https://docs.qmk.fm/#/feature_macros?id=super-alt%e2%86%aftab
-bool     is_alt_tab_pressed    = false;
-uint16_t alt_tab_timer         = 0;
-const uint16_t ALT_TAB_TIMEOUT = 300;
 
-// toggles the typical shift keys (in lower corners). Useful when learning to use homerow mod's shift keys but still need to be productive at day job.
-bool normal_shift_key_active = false;
 
 // Trackpoint/mouse pointer dynamic speed controls and GUI/OLED settings
 uint8_t acceleration_setting        = 4;
@@ -114,42 +108,14 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 enum combos {
   COMBO_FG,
   COMBO_HJ,
-  /*    COMBO_MCOMMADOT_FORWARDHISTORY,
-    COMBO_NMCOMM_BACKHISTORY,
-    COMBO_HJK_CLOSETAB,
-    COMBO_YUI_PREVTAB,
-    COMBO_UIO_NEXTTAB,
-    COMBO_GH_CAPSLOCK,
-    COMBO_UI_ESCAPE,
-    COMBO_FG_TAB,*/
-  //COMBO_COUNT
-  //NUM_COMBOS    // make sure this is always the final element in the combos enum
-                  // TODO: get rid of QMK's static value for this because I'm editing it too often and forgetting during debugging!!!!!!
 };
 
 const uint16_t PROGMEM combo_fg[]       = {LCTL_T(KC_F), KC_G, COMBO_END};
 const uint16_t PROGMEM combo_hj[]        = {RCTL_T(KC_J), KC_H, COMBO_END};
-/*const uint16_t PROGMEM combo_yui[]       = {KC_Y, KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_uio[]       = {KC_U, KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_hjk[]       = {KC_H, RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM combo_nmcomm[]    = {KC_N, KC_M, KC_COMM, COMBO_END};
-const uint16_t PROGMEM combo_mcommadot[] = {KC_M, KC_COMMA, KC_DOT, COMBO_END};
 
-
-klkconst uint16_t PROGMEM combo_gh[]        = {KC_G, KC_H, COMBO_END};
-const uint16_t PROGMEM combo_ui[]        = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM combo_fg[]        = {LSFT_T(KC_F), KC_G, COMBO_END};*/
 combo_t key_combos[] = {
   [COMBO_FG] = COMBO_ACTION(combo_fg),
-  [COMBO_HJ] = COMBO_ACTION(combo_hj)
-  /*    [COMBO_UIO_NEXTTAB] = COMBO_ACTION(combo_uio),
-    [COMBO_YUI_PREVTAB] = COMBO_ACTION(combo_yui),
-    [COMBO_HJK_CLOSETAB] = COMBO_ACTION(combo_hjk),
-    [COMBO_NMCOMM_BACKHISTORY] = COMBO_ACTION(combo_nmcomm),
-    [COMBO_MCOMMADOT_FORWARDHISTORY] = COMBO_ACTION(combo_mcommadot),
-    [COMBO_GH_CAPSLOCK] = COMBO_ACTION(combo_gh),
-    [COMBO_UI_ESCAPE] = COMBO_ACTION(combo_ui),
-    [COMBO_FG_TAB] = COMBO_ACTION(combo_fg)*/
+  [COMBO_HJ] = COMBO_ACTION(combo_hj),
 };
 
 uint16_t COMBO_LEN = ARRAY_SIZE(key_combos);
@@ -166,51 +132,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 	tap_code16(KC_END);
       }
       break;
-      /*case COMBO_UI_ESCAPE:
-            if (pressed) {
-                tap_code16(KC_ESC);
-            }
-            break;
-        case COMBO_UIO_NEXTTAB:
-            if (pressed) {
-                tap_code16(LCTL(KC_PGDN));
-            }
-            break;
-        case COMBO_YUI_PREVTAB:
-            if (pressed) {
-                tap_code16(LCTL(KC_PGUP));
-            }
-            break;
-        case COMBO_HJK_CLOSETAB:
-            if (pressed) {
-                tap_code16(LCTL(KC_W));
-            }
-            break;
-        case COMBO_NMCOMM_BACKHISTORY:
-            if (pressed) {
-                tap_code16(LALT(KC_LEFT));
-            }
-            break;
-        case COMBO_MCOMMADOT_FORWARDHISTORY:
-            if (pressed) {
-                tap_code16(LALT(KC_RGHT));
-            }
-            break;
-        case COMBO_GH_CAPSLOCK:
-            if (pressed) {
-                tap_code16(KC_CAPS);
-            }
-        case COMBO_FG_TAB:
-            if (pressed) {
-                tap_code16(KC_TAB);
-            }
-            break;
-	    */
   }
 }
 
 // Santoku keymap layout
-// TODO: figure out why LALT_T doesn't "stick" when held down. It just presses "ALT" then releases. So, using RALT for everything right now.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] =
     {/*QWERTY*/
@@ -341,18 +266,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true; // Let QMK send the press/release events
             break;
 
-        case TAPALTTB: // Improved on but inspired by: https://github.com/qmk/qmk_firmware/blob/master/keyboards/dz60/keymaps/_bonfire/not-in-use/super-alt-tab.c
-            if (record->event.pressed) {
-                is_alt_tab_pressed = true;
-                register_code(KC_LALT);
-                tap_code(KC_TAB);
-            } else {
-                is_alt_tab_pressed = false;
-                alt_tab_timer     = timer_read();
-            }
-            return true;
-            break;
-
         case A_B_TEST:
             if (record->event.pressed) {
                 scroll_wheel_test_setting++;
@@ -409,9 +322,6 @@ bool oled_task_user(void) {
         if (timer_read() > vanity_timeout) {
             show_vanity_text = false;
         }
-    }
-    else if (is_alt_tab_pressed ) {
-        oled_write_ln_P(PSTR("   ALT-TAB ACTIVE   "), true);
     }
     else {
         switch (get_highest_layer(layer_state)) {
