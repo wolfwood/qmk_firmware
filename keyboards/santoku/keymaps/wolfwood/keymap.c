@@ -610,7 +610,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         clockwise ? tap_code(KC_WH_U) : tap_code(KC_WH_D);
     }
     pointing_device_set_report(currentReport);
-    pointing_device_send();
+    //pointing_device_send();
     encoder_timer = timer_read();
     return true;
 }
