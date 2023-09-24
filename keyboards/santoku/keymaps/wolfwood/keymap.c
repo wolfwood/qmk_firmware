@@ -65,10 +65,12 @@ enum santoku_keycodes {
     DEC_DRGS,
     INC_DRGS,
     TAPALTTB,
-    A_B_TEST };
+    A_B_TEST,
+
+    BRACES
+};
 
 #define ___x___ XXXXXXX
-
 
 
 // Trackpoint/mouse pointer dynamic speed controls and GUI/OLED settings
@@ -208,7 +210,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   //#endif
 
+  const uint8_t mods = get_mods();
+  //const uint8_t oneshot_mods = get_oneshot_mods();
+
   switch (keycode) {
+        case BRACES:
+	  if (record->event.pressed) {
+	    //clear_oneshot_mods();  // Temporarily disable mods.
+	    unregister_mods(MOD_MASK_CSAG);
+	    if ((mods /*| oneshot_mods*/) & MOD_MASK_CTRL) {
+	      if ((mods /*| oneshot_mods*/) & MOD_MASK_SHIFT) {
+		SEND_STRING("''");
+	      } else {
+		SEND_STRING("\"\"");
+	      }
+	    } else if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+	      SEND_STRING("<>");
+	    } else if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
+	      SEND_STRING("()");
+	    } else if ((mods /*| oneshot_mods*/) & MOD_MASK_SHIFT) {
+		SEND_STRING("{}");
+	    } else {
+	      SEND_STRING("[]");
+	    }
+	    tap_code(KC_LEFT);  // Move cursor between braces.
+	    register_mods(mods);  // Restore mods.
+	  }
+	  return false;
 
         case DEC_ACCL:
             if (record->event.pressed) {
