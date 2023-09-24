@@ -92,10 +92,8 @@ const key_override_t delete_key_override = ko_make_basic(MOD_MASK_GUI, KC_BSPC, 
 const key_override_t delete_thumb_override = ko_make_basic(MOD_MASK_GUI, LT(_NAVIGATION, KC_BSPC), KC_DEL);
 
 // Shift + esc = ~
-const key_override_t tilde_esc_override = ko_make_basic(MOD_MASK_SHIFT, LT(_FUNCTION, KC_ESC), S(KC_GRV));
 
 // GUI + esc = `
-const key_override_t grave_esc_override = ko_make_basic(MOD_MASK_GUI, LT(_FUNCTION, KC_ESC), KC_GRV);
 
 const key_override_t **key_overrides = (const key_override_t *[]){
   	&delete_key_override,
