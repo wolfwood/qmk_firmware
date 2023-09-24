@@ -137,12 +137,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 // Santoku keymap layout
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY] =
-    {/*QWERTY*/
-      {TG(_NAVIGATION),KC_Q,    KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_BSLS},
-        {KC_MINS, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_QUOT},
-        {CW_TOGG, KC_Z,         KC_X,         KC_C,                   KC_V,         KC_B,         KC_N,            KC_M,            KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS},
-        {___x___,  ___x___,     ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, KC_ESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},
+    [_QWERTY] ={
+      {QK_GESC, KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_MINS},
+      {KC_BSPC, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT},
+      {KC_TAB,  KC_Z,         KC_X,         LT(_SYMBOL,KC_C),       LT(_NAVIGATION,KC_V),KC_B,  KC_N,            LT(_SYMBOL,KC_M),KC_COMM,      KC_DOT,       KC_SLSH,         KC_QUOT},
+      {___x___,  ___x___,      ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, QK_GESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},
 
     [_TARMAKDH1] ={
       {_______,  _______,  _______,  KC_J,     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
@@ -153,16 +152,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_SYMBOL] =
     {/*SYMBOL*/
-        {KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_MINS},
-        {KC_MINS, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL},
-        {KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, KC_RBRC,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE},
+        {KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      TG(_SYMBOL)},
+        {_______, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL},
+        {KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, BRACES,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE},
         {___x___, ___x___,      ___x___,      _______,      _______,      _______,  _______, _______,      _______,      ___x___,      ___x___,      ___x___}},
 
     [_NAVIGATION] =
     {/*NAVIGATION*/
       {TG(_NAVIGATION),XXXXXXX,XXXXXXX,XXXXXXX, XXXXXXX,  XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_UP,                XXXXXXX, XXXXXXX},
-        {KC_ESC,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              XXXXXXX, XXXXXXX},
-        {_______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       KC_DOWN,       KC_UP,              XXXXXXX,              XXXXXXX, _______},
+        {KC_ESC,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,                KC_UP, XXXXXXX},
+        {_______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX, LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),          LCTL(KC_UP), _______},
         {___x___, ___x___,  ___x___,  _______,  _______,  _______,  _______,       _______,       _______,            ___x___,              ___x___, ___x___}},
 
     [_FUNCTION] =
