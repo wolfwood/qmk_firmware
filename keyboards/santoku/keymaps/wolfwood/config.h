@@ -70,3 +70,5 @@
   #define MH_AUTO_BUTTONS_TIMEOUT 650
   #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default */
 //#endif
+
+#undef LAYER_STATE_8BIT
