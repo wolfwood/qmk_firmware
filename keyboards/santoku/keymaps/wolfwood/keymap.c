@@ -468,7 +468,7 @@ bool oled_task_user(void) {
                 oled_write_ln_P(PSTR(""), false);
                 break;
 
-            case _FUNCTION:
+	    case _FUNCTION:
                 oled_write_P(PSTR(" Function & Settings\n"), true);
                 oled_write_P(PSTR("SCROLLWHEEL TEST:"), false);
                 oled_write(get_u8_str(scroll_wheel_test_setting, ' '), false);
