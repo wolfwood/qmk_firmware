@@ -1,0 +1,41 @@
+{
+    "manufacturer": "wolfwood",
+    "keyboard_name": "rptp",
+    "maintainer": "wolfwood",
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "bootmagic": false,
+        "command": true,
+        "console": true,
+        "extrakey": false,
+        "mousekey": true,
+        "nkro": false,
+	"midi": false
+    },
+    "matrix_pins": {
+        "cols": ["GP16"],
+        "rows": ["GP17"]
+    },
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0000",
+        "vid": "0xFEED"
+    },
+    "ps2": {
+	"enabled": true,
+	"mouse_enabled": true,
+	"driver": "vendor",
+	"clock_pin": "GP24",
+	"data_pin": "GP23"
+    },
+    "layouts": {
+        "LAYOUT_ortho_1x1": {
+            "layout": [
+                {"matrix": [0, 0], "x": 0, "y": 0},
+            ]
+        }
+    }
+}
