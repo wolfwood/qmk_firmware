@@ -64,17 +64,24 @@ static inline uint8_t readMatrixPin(pin_t pin) {
 bool select_row(uint8_t row) {
     pin_t pin = row_pins[row];
     if (pin != NO_PIN) {
-        setPinOutput_writeHigh(pin);  // this is opposite of most KB matrices
+#ifdef PFET_ROWS
+        setPinOutput_writeLow(pin);  //
         return true;
+#else
+        setPinOutput_writeHigh(pin);  //  this is opposite of most KB matrices
+        return true;
+#endif
     }
     return false;
 }
 
 void unselect_row(uint8_t row) {
     pin_t pin = row_pins[row];
-    if (pin != NO_PIN) {
-        setPinOutput_writeLow(pin);
-    }
+#ifdef PFET_ROWS
+            setPinOutput_writeHigh(pin);
+#else
+            setPinOutput_writeLow(pin);
+#endif
 }
 
 static void unselect_rows(void) {
