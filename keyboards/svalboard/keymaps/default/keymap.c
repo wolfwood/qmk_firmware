@@ -35,9 +35,10 @@ enum my_keycodes {
 enum layer {
     NORMAL,
     NORMAL_HOLD,
+    NAS,
     FUNC,
     FUNC_HOLD,
-    NAS,
+    MBO,
     NUM_LAYERS
 };
 
@@ -67,8 +68,8 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
         /*R4*/ KC_RIGHT,        KC_WH_R,        XXXXXXX,        KC_MS_R,        LCTL(KC_RIGHT),
 
         /*L1*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN1,        XXXXXXX,
-        /*L2*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN2,        XXXXXXX,
-        /*L3*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN3,        XXXXXXX,
+        /*L2*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN3,        XXXXXXX,
+        /*L3*/ XXXXXXX,         XXXXXXX,        XXXXXXX,        KC_BTN2,        XXXXXXX,
         /*L4*/ DF(NORMAL),      _______,        _______,        XXXXXXX,       _______,
 
         /*Down                  Inner           Upper           Outer Upper     Outer Lower  Pushthrough*/
@@ -126,15 +127,54 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
         /*RT*/ _______,         _______,        _______,        _______,        _______,_______,
         /*LT*/ _______,         _______,        _______,        _______,        _______, _______
     ),
+    
+    [MBO] = LAYOUT(
+             /*Center           North           East            South           West*/
+        /*R1*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,
+        /*R2*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,
+        /*R3*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,
+        /*R4*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,
+        /*L1*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_BTN1,        KC_TRNS,
+        /*L2*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_BTN3,        KC_TRNS,
+        /*L3*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_BTN2,        KC_TRNS,
+        /*L4*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,
+        /*RT*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,   KC_TRNS,
+        /*LT*/ KC_TRNS,        KC_TRNS,       KC_TRNS,       KC_TRNS,       KC_TRNS,   KC_TRNS
+        )
 
 };
 
 
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+void mouse_mode(bool);
+
+static uint16_t mh_auto_buttons_timer;
+extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
+
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
       // If console is enabled, it will print the matrix position and status of each key pressed
 #ifdef CONSOLE_ENABLE
     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif 
+
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+    if (mh_auto_buttons_timer) {
+      switch (keycode) {
+      case KC_BTN1:
+      case KC_BTN2:
+      case KC_BTN3:
+//      case KC_WBAK:
+//      case KC_WFWD:
+	break;
+      default:
+	mouse_mode(false);
+      }
+    }
+#endif
+
   switch (keycode) {
 
      case KC_NORMAL_HOLD:
@@ -145,16 +185,52 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(NORMAL_HOLD);
       }
       return false;
-     case KC_FUNC_HOLD:
+/*     case KC_FUNC_HOLD:
       if (record->event.pressed) {
           layer_clear();
           layer_on(FUNC_HOLD);
       } else {
           layer_off(FUNC_HOLD);
       }
-      return false;
+      return false;*/
     default:
       return true;
   }
 };
 
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
+  if (mh_auto_buttons_timer) {
+    mh_auto_buttons_timer = timer_read();
+  } else {
+    if (!tp_buttons) {
+      mouse_mode(true);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: on\n");
+  #endif
+    }
+  }
+}
+
+void matrix_scan_user(void) {
+  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
+    if (!tp_buttons) {
+      mouse_mode(false);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: off\n");
+  #endif
+    }
+  }
+}
+
+void mouse_mode(bool on) {
+  if (on) {
+    layer_on(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = timer_read();
+  } else {
+    layer_off(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = 0;
+  }
+}
+
+#endif // defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && #defined MOUSEKEY_ENABLE

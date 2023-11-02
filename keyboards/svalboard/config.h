@@ -49,6 +49,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 #define FORCE_NKRO
 
+#if defined MH_AUTO_BUTTONS
+  #define MH_AUTO_BUTTONS_LAYER MBO
+  #define MH_AUTO_BUTTONS_TIMEOUT 5000
+  #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default */
+#endif
+
 //#define USB_POLLING_INTERVAL_MS 1
 
 
