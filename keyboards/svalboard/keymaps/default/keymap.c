@@ -181,7 +181,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
           layer_clear();
           layer_on(NORMAL_HOLD);
-          SEND_STRING(SS_LCTL(SS_LALT(SS_LSFT(SS_TAP(X_A)))));
+          SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_F19)))));
       } else {
           layer_off(NORMAL_HOLD);
       }
