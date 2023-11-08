@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PS2_RESET_PIN GP25
 #define PS2_CLOCK_PIN GP24
 #define PS2_DATA_PIN GP23
-#define PS2_MOUSE_ROTATE 270
+#define PS2_MOUSE_ROTATE 270  //CCW rotation
 
 #define SERIAL_DEBUG
 #define SERIAL_USART_TX_PIN GP0 
@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 #define FORCE_NKRO
 
-
+//@manna-harbour's automousekeys
 #if defined MH_AUTO_BUTTONS
   #define MH_AUTO_BUTTONS_LAYER MBO
   #define MH_AUTO_BUTTONS_TIMEOUT 5000
