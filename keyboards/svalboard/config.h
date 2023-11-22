@@ -49,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PS2_RESET_PIN GP25
 #define PS2_CLOCK_PIN GP24
 #define PS2_DATA_PIN GP23
-#define PS2_MOUSE_ROTATE 270  //CCW rotation
+#define PS2_MOUSE_ROTATE 270  //CCW rotation for trackpoint
 
 #define SERIAL_DEBUG
 #define SERIAL_USART_TX_PIN GP0 
@@ -62,7 +62,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #if defined MH_AUTO_BUTTONS
   #define MH_AUTO_BUTTONS_LAYER MBO
   #define MH_AUTO_BUTTONS_TIMEOUT 5000
-  #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default */
+  #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default -- tap to enter relative scroll, hold to use direct scroll*/ 
+ // #define PS2_MOUSE_SCROLL_BTN_MASK 0  // just normal middle button for panning and relative scroll
+  //#define PS2_MOUSE_SCROLL_BTN_MASK ((1<<PS2_MOUSE_BTN_RIGHT) | (1<<PS2_MOUSE_BTN_LEFT))  //hold right click for direct scroll, use middle for relative scroll and pan
+  #define PS2_MOUSE_SCROLL_DIVISOR_H 4
+  #define PS2_MOUSE_SCROLL_DIVISOR_V 4
 #endif
 
 //#define USB_POLLING_INTERVAL_MS 1
