@@ -62,8 +62,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #if defined MH_AUTO_BUTTONS
   #define MH_AUTO_BUTTONS_LAYER MBO
   #define MH_AUTO_BUTTONS_TIMEOUT 5000
-  #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default -- tap to enter relative scroll, hold to use direct scroll*/ 
- // #define PS2_MOUSE_SCROLL_BTN_MASK 0  // just normal middle button for panning and relative scroll
+ // #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default -- tap to enter relative scroll, hold to use direct scroll*/ 
+  #define PS2_MOUSE_SCROLL_BTN_MASK 0  // just normal middle button for panning and relative scroll
   //#define PS2_MOUSE_SCROLL_BTN_MASK ((1<<PS2_MOUSE_BTN_RIGHT) | (1<<PS2_MOUSE_BTN_LEFT))  //hold right click for direct scroll, use middle for relative scroll and pan
   #define PS2_MOUSE_SCROLL_DIVISOR_H 4
   #define PS2_MOUSE_SCROLL_DIVISOR_V 4
