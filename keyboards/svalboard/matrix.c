@@ -25,12 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define ROWS_PER_HAND 5
 
-
-
 // matrix code
 const pin_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
 const pin_t row_pins[ROWS_PER_HAND] = MATRIX_ROW_PINS;
-static const uint8_t col_pushed_states[MATRIX_COLS] = MATRIX_COL_PUSHED_STATES;
+//static const uint8_t col_pushed_states[MATRIX_COLS] = MATRIX_COL_PUSHED_STATES;
+static const uint8_t col_pushed_states_fingers[MATRIX_COLS] = MATRIX_COL_PUSHED_STATES;
+static const uint8_t col_pushed_states_thumbs[MATRIX_COLS] = MATRIX_COL_PUSHED_STATES_THUMBS;
 
 static inline void setPinOutput_writeLow(pin_t pin) {
     ATOMIC_BLOCK_FORCEON {
@@ -84,6 +84,7 @@ void unselect_row(uint8_t row) {
 #endif
 }
 
+
 static void unselect_rows(void) {
     for (uint8_t x = 0; x < ROWS_PER_HAND; x++) {
         unselect_row(x);
@@ -100,18 +101,25 @@ void matrix_read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     matrix_row_t current_row_value = 0;
 
     select_row(current_row);
-    wait_us(60);
+    // if thumb row use col_pushed_states_thumbs
+
+    wait_us(PREWAIT_US);
 
     // For each col...
     for (uint8_t col_index = 0; col_index < MATRIX_COLS; col_index++) {
-        uint8_t pin_state = (readPin(col_pins[col_index]) == col_pushed_states[col_index]) ? 1 : 0;  // read pin and match pushed_states define
+        uint8_t pin_state;
+        if (current_row == 0) {
+            pin_state = (readPin(col_pins[col_index]) == col_pushed_states_thumbs[col_index]) ? 1 : 0;  // read pin and match pushed_states define
+        } else {
+            pin_state = (readPin(col_pins[col_index]) == col_pushed_states_fingers[col_index]) ? 1 : 0;  // read pin and match pushed_states define
+        }
         // Populate the matrix row with the state of the col pin
         current_row_value |= (pin_state << col_index);
     }
 
     // Unselect row
     unselect_row(current_row);
-    wait_us(60);
+    wait_us(POSTWAIT_US);
 
     // Update the matrix
     current_matrix[current_row] = current_row_value;
@@ -130,7 +138,6 @@ void matrix_init_custom(void) {
             }
         }
     }
-    setPinOutput_writeLow(GP25); // turn off RESET signal for Trackpoint (active high reset on 8707-51)
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {

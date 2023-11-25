@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS  10
 #define MATRIX_COLS  6
 #define PFET_ROWS
-#define THUMB_DOWN_ACTIVE_DARK
+//#define THUMB_DOWN_ACTIVE_DARK
 #define FORCE_NKRO
 
 //#define DEBUG_MATRIX_SCAN_RATE
