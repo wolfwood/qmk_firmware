@@ -7,10 +7,22 @@ CUSTOM_MATRIX = lite
 SRC += matrix.c
 
 SERIAL_DRIVER = vendor
-
+# this turns on trackpoint:
+# PS2_MOUSE_ENABLE = yes
+# this turns on trackballs including pimoroni
 POINTING_DEVICE_ENABLE = yes
+# this selects trackball driver
+POINTING_DEVICE_DRIVER = pmw3360
+# pimoroni_trackball
+# pmw3389
 
-POINTING_DEVICE_DRIVER = pimoroni_trackball
+# this turns on Manna-Harbour's automousekeys:
+MH_AUTO_BUTTONS = yes
+
+ifeq ($(strip $(MH_AUTO_BUTTONS)), yes)
+  MOUSEKEY_ENABLE = yes
+  OPT_DEFS += -DMH_AUTO_BUTTONS
+endif
 
 ifeq ($(strip $(POINTING_DEVICE_DRIVER)), pimoroni_trackball)
 	OPT_DEFS += -DPOINTING_DEVICE_IS_PIMORONI
@@ -24,10 +36,3 @@ ifeq ($(strip $(POINTING_DEVICE_DRIVER)), pmw3389)
 	OPT_DEFS += -DPOINTING_DEVICE_IS_PMW3389
 endif
 
-PS2_MOUSE_ENABLE = yes
-MH_AUTO_BUTTONS = yes
-
-ifeq ($(strip $(MH_AUTO_BUTTONS)), yes)
-  MOUSEKEY_ENABLE = yes
-  OPT_DEFS += -DMH_AUTO_BUTTONS
-endif
