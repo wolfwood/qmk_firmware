@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS  10
 #define MATRIX_COLS  6
 #define PFET_ROWS
+#define THUMB_DOWN_ACTIVE_DARK
 #define FORCE_NKRO
 
 //#define DEBUG_MATRIX_SCAN_RATE
@@ -35,7 +36,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //Knuckle Nail Down Pad Up Double
 
 #define MATRIX_COL_PUSHED_STATES { 0, 0, 1, 0, 0, 0 }
+#ifdef THUMB_DOWN_ACTIVE_DARK
+    #define MATRIX_COL_PUSHED_STATES_THUMBS { 0, 0, 1, 0, 0, 0 }
+#else
+    #define MATRIX_COL_PUSHED_STATES_THUMBS { 0, 0, 0, 0, 0, 0 }
+#endif
 #define DOUBLEDOWN_COL 5 // need a pullup on COL6
+#define PREWAIT_US 90
+#define POSTWAIT_US 90
 
 #define SERIAL_DEBUG
 #define SERIAL_USART_TX_PIN GP0 
@@ -106,7 +114,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #define PMW33XX_CPI 3200
   #define POINTING_DEVICE_INVERT_X_RIGHT
   /* #define ROTATIONAL_TRANSFORM_ANGLE_RIGHT 75 */
-
+#endif
 #endif
 
 #if defined MH_AUTO_BUTTONS
