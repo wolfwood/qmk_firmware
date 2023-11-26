@@ -24,8 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PFET_ROWS
 //#define THUMB_DOWN_ACTIVE_DARK
 #define FORCE_NKRO
-#undef PS2_MOUSE_ENABLE
 //#define DEBUG_MATRIX_SCAN_RATE
+//#define PS2_MOUSE_ENABLE // see info.json for duplicate...
 
 // wiring of each half
 //Layout for svalboard v0 (different from lalboard_v2)

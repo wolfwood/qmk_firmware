@@ -8,9 +8,9 @@ SRC += matrix.c
 
 SERIAL_DRIVER = vendor
 # this turns on trackpoint:
-#PS2_MOUSE_ENABLE = no
+PS2_MOUSE_ENABLE = yes
 # this turns on trackballs including pimoroni
-POINTING_DEVICE_ENABLE = yes
+POINTING_DEVICE_ENABLE = no
 # this selects trackball driver
 POINTING_DEVICE_DRIVER = pmw3360
 # pimoroni_trackball
