@@ -22,8 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROWS  10
 #define MATRIX_COLS  6
 #define PFET_ROWS
-
+//#define THUMB_DOWN_ACTIVE_DARK
+#define FORCE_NKRO
 //#define DEBUG_MATRIX_SCAN_RATE
+//#define PS2_MOUSE_ENABLE // see info.json for duplicate...
 
 // wiring of each half
 //Layout for svalboard v0 (different from lalboard_v2)
@@ -40,23 +42,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #else
     #define MATRIX_COL_PUSHED_STATES_THUMBS { 0, 0, 0, 0, 0, 0 }
 #endif
+#ifdef THUMB_DOWN_ACTIVE_DARK
+    #define MATRIX_COL_PUSHED_STATES_THUMBS { 0, 0, 1, 0, 0, 0 }
+#else
+    #define MATRIX_COL_PUSHED_STATES_THUMBS { 0, 0, 0, 0, 0, 0 }
+#endif
 #define DOUBLEDOWN_COL 5 // need a pullup on COL6
 #define PREWAIT_US 90
 #define POSTWAIT_US 90
-
-//#define SERIAL_PIO_USE_PIO1
-#define PS2_PIO_USE_PIO1
-#define PS2_RESET_PIN GP25
-#define PS2_CLOCK_PIN GP24
-#define PS2_DATA_PIN GP23
-#define PS2_MOUSE_ROTATE 270  //CCW rotation for trackpoint
 
 #define SERIAL_DEBUG
 #define SERIAL_USART_TX_PIN GP0 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500 // Timeout window in ms in which the double tap can occur.
- 
+
 #define FORCE_NKRO
+#ifdef PS2_MOUSE_ENABLE
+  //#define SERIAL_PIO_USE_PIO1
+  #define PS2_PIO_USE_PIO1
+  #define PS2_RESET_PIN GP25
+  #define PS2_CLOCK_PIN GP24
+  #define PS2_DATA_PIN GP23
+  #define PS2_MOUSE_ROTATE 270 
+#endif
 
 //@manna-harbour's automousekeys
 #if defined MH_AUTO_BUTTONS

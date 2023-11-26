@@ -5,7 +5,6 @@
 #include "ps2.h"
 #endif
 
-
 #ifdef PS2_MOUSE_ENABLE
 void ps2_mouse_init_user() {
   //sensitivity command in fourth byte 00 = 0 multiplier, FF = 2.0 multiplier
@@ -21,8 +20,7 @@ void ps2_mouse_init_user() {
   PS2_MOUSE_SEND(0xE2, "pts: 0xE2");
   PS2_MOUSE_SEND(0x47, "pts: 0x47");
   PS2_MOUSE_SEND(0x2C, "pts: 0x2C");
-  PS2_MOUSE_SEND(0x01, "pts: 0x01");
-*/  
+  PS2_MOUSE_SEND(0x01, "pts: 0x01");  // 01 turns on Z tap, 00 turns off
   
 
   // transfer function plateau speed -- default is 0x61
