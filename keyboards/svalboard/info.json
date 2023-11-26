@@ -46,7 +46,7 @@
       "term": 200                                                                         
   },
   "ps2": {
-    "enabled": true,
+    "enabled": false,
     "driver": "vendor",
     "clock_pin": "GP24",
     "data_pin": "GP23"
