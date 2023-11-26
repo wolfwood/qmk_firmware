@@ -16,12 +16,12 @@ void ps2_mouse_init_user() {
     */
 
 //Z tap -- doesn't seem to work.  0x01 is on.
-/*
+
   PS2_MOUSE_SEND(0xE2, "pts: 0xE2");
   PS2_MOUSE_SEND(0x47, "pts: 0x47");
   PS2_MOUSE_SEND(0x2C, "pts: 0x2C");
   PS2_MOUSE_SEND(0x01, "pts: 0x01");  // 01 turns on Z tap, 00 turns off
-  
+
 
   // transfer function plateau speed -- default is 0x61
 /*
