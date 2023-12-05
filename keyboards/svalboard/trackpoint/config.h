@@ -55,28 +55,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SERIAL_USART_TX_PIN GP0 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500 // Timeout window in ms in which the double tap can occur.
-
 #define FORCE_NKRO
+
+//PS2 Trackpoint Setup
 #ifdef PS2_MOUSE_ENABLE
   //#define SERIAL_PIO_USE_PIO1
   #define PS2_PIO_USE_PIO1
   #define PS2_RESET_PIN GP25
   #define PS2_CLOCK_PIN GP24
   #define PS2_DATA_PIN GP23
+  #define PS2_MOUSE_SCROLL_DIVISOR_H 4
+  #define PS2_MOUSE_SCROLL_DIVISOR_V 4
   #define PS2_MOUSE_ROTATE 270 
+  #define PS2_MOUSE_SCROLL_BTN_MASK 0  // just normal middle button for panning and relative scroll
+  //#define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default -- tap to enter relative scroll, hold to use direct scroll*/ 
 #endif
 
 //@manna-harbour's automousekeys
 #if defined MH_AUTO_BUTTONS
   #define MH_AUTO_BUTTONS_LAYER MBO
   #define MH_AUTO_BUTTONS_TIMEOUT 5000
- // #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default -- tap to enter relative scroll, hold to use direct scroll*/ 
-  #define PS2_MOUSE_SCROLL_BTN_MASK 0  // just normal middle button for panning and relative scroll
-  //#define PS2_MOUSE_SCROLL_BTN_MASK ((1<<PS2_MOUSE_BTN_RIGHT) | (1<<PS2_MOUSE_BTN_LEFT))  //hold right click for direct scroll, use middle for relative scroll and pan
-  #define PS2_MOUSE_SCROLL_DIVISOR_H 4
-  #define PS2_MOUSE_SCROLL_DIVISOR_V 4
 #endif
 
 //#define USB_POLLING_INTERVAL_MS 1
 
-#define EE_HANDS
+
+
+
