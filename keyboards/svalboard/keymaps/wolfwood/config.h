@@ -1,0 +1,11 @@
+#define PS2_MOUSE_SCROLL_DIVISOR_H 4
+#define PS2_MOUSE_SCROLL_DIVISOR_V 4
+
+//#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
+#define PERMISSIVE_HOLD
+#define RETRO_TAPPING
+
+#define TAPPING_TOGGLE 1
+
+#define PS2_MOUSE_ROTATE 90 // left side only
