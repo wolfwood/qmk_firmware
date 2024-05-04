@@ -49,13 +49,13 @@
 
 // Santoku keymap set up
 enum santoku_layers {
-    _QWERTY,
-    _TARMAKDH1,
+  _QWERTY,
+  /*_TARMAKDH1,
     _TARMAKDH1B,
     _TARMAKDH2,
     _TARMAKDH3,
     _TARMAKDH4,
-    _TARMAKDH5,
+    _TARMAKDH5,*/
     _COLEMAKDH,
     _SYMBOL,
     _NAVIGATION,
@@ -80,9 +80,9 @@ enum santoku_keycodes {
 
 
 // Trackpoint/mouse pointer dynamic speed controls and GUI/OLED settings
-uint8_t acceleration_setting        = 4;
+uint8_t acceleration_setting        = 5;
 float   acceleration_values[6]      = {0.6, 0.8, 1, 1.2, 1.4, 1.6};
-uint8_t linear_reduction_setting    = 4;
+uint8_t linear_reduction_setting    = 5;
 float   linear_reduction_values[6]  = {2.4, 2.2, 2.0, 1.8, 1.6, 1.4};
 uint8_t drag_scroll_speed_setting   = 4;
 uint8_t drag_scroll_speed_values[6] = {8, 7, 6, 5, 4, 3};
@@ -151,13 +151,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 // Santoku keymap layout
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_QWERTY] ={
-      {QK_GESC, KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_MINS},
+  [_QWERTY] ={
+      {QK_GESC, KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_QUOT},
       {KC_BSPC, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT},
-      {KC_TAB,  KC_Z,         KC_X,         LT(_SYMBOL,KC_C),       LT(_NAVIGATION,KC_V),KC_B,  KC_N,            LT(_SYMBOL,KC_M),KC_COMM,      KC_DOT,       KC_SLSH,         KC_QUOT},
+      {KC_TAB,  KC_Z,         KC_X,         LT(_SYMBOL,KC_C),       LT(_NAVIGATION,KC_V),KC_B,  KC_N,            LT(_SYMBOL,KC_M),KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS},
       {___x___,  ___x___,      ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, QK_GESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},
 
-    [_TARMAKDH1] ={
+  /*[_TARMAKDH1] ={
       {_______,  _______,  _______,  KC_J,     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
       {_______,  _______,  _______,  _______,  _______,  _______,  KC_M,    RCTL_T(KC_N),RSFT_T(KC_E),_______,_______,_______},
       {_______,  _______,  _______,  _______,  _______,  _______,  KC_K,     LT(_SYMBOL,KC_H),
@@ -192,7 +192,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_L,     KC_U,     _______,  _______,  _______},
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_I,     _______,  _______},
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
-      {___x___,  ___x___,  ___x___,  _______,  _______,  _______,  _______,  _______,  _______,  ___x___,  ___x___,  ___x___}} ,
+      {___x___,  ___x___,  ___x___,  _______,  _______,  _______,  _______,  _______,  _______,  ___x___,  ___x___,  ___x___}} ,*/
 
     /*[_TARMAKDH3] ={
       {_______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______},
@@ -201,15 +201,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       {___x___,  ___x___,  ___x___,  _______,  _______,  _______,  _______,  _______,  _______,  ___x___,  ___x___,  ___x___}
       } ,*/
 
-    /*[_COLEMAKDH] ={
-      {TG(_NAVIGATION),KC_Q,   KC_W,         KC_F,                   KC_P,         KC_B,         KC_J,            KC_L,            KC_U,         KC_Y,         KC_SCLN,         TG(_SYMBOL)},
-      {KC_MINS,  RALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_QUOT},
-      {CW_TOGG,  KC_Z,         KC_X,         KC_C,                   KC_D,         KC_V,         KC_K,            KC_H,            KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS},
-      {___x___,  ___x___,      ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, KC_ESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},*/
+    [_COLEMAKDH] ={
+      {QK_GESC, KC_Q,   KC_W,         KC_F,                   KC_P,         KC_B,         KC_J,            KC_L,            KC_U,         KC_Y,         KC_SCLN,         KC_QUOT},
+      {KC_BSPC, RALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_ENT},
+      {KC_TAB,  KC_Z,         KC_X,       LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_D), KC_V,         KC_K,           LT(_SYMBOL,KC_H), KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS},
+      {___x___,  ___x___,      ___x___, LT(_NAVIGATION, KC_BSPC),LT(_SYMBOL, KC_SPC),LT(_FUNCTION, KC_ESC),  KC_TAB,LT(_SYMBOL, KC_ENT),KC_TAB,  ___x___,      ___x___,         ___x___}},
 
     [_SYMBOL] =
     {/*SYMBOL*/
-        {KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      TG(_SYMBOL)},
+        {KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_MINUS},
         {_______, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL},
         {KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, BRACES,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE},
         {___x___, ___x___,      ___x___,      _______,      _______,      _______,  _______, _______,      _______,      ___x___,      ___x___,      ___x___}},
@@ -223,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FUNCTION] =
     {/*FUNCTION*/
-      {TG(_TARMAKDH1), XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
+      {TG(_COLEMAKDH), XXXXXXX,       DEC_ACCL, INC_ACCL, DEC_SPED, INC_SPED, DEC_DRGS, INC_DRGS, A_B_TEST,       XXXXXXX, XXXXXXX, XXXXXXX},
         {KC_ESC,  RALT_T(KC_F1), LGUI_T(KC_F2),          LSFT_T(KC_F3),          LCTL_T(KC_F4),     KC_F5,             KC_F6,                 RCTL_T(KC_F7),         RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX},
         {_______, XXXXXXX,       XXXXXXX,                XXXXXXX,                XXXXXXX,           XXXXXXX,           KC_F11,                KC_F12,                XXXXXXX,       XXXXXXX, XXXXXXX, _______},
         {___x___, ___x___,       ___x___,                KC_DEL,                 KC_SPC,            XXXXXXX,           XXXXXXX,               XXXXXXX,               QK_BOOT,       ___x___, ___x___, ___x___}},
@@ -424,8 +424,8 @@ bool oled_task_user(void) {
                 oled_write_P(qmk_logo, false);
                 break;
 
-            case _TARMAKDH1:
-                oled_write_P(PSTR("       Tarmak 1     \n"), true);
+            case _COLEMAKDH:
+                oled_write_P(PSTR("       Colemak    \n"), true);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(""), false);
                 oled_write_ln_P(PSTR(""), false);
