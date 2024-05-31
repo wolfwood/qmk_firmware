@@ -65,6 +65,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #define PS2_MOUSE_SCROLL_BTN_MASK (1<<PS2_MOUSE_BTN_MIDDLE) /* Default */
 #endif
 
+#define TP_RECAL_TIMEOUT 5*60*1000
+
 //#define USB_POLLING_INTERVAL_MS 1
 
 #define EE_HANDS

@@ -89,16 +89,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MODLAYOUT BRM
 
 
+static uint32_t tp_recal_timer;
+
 void keyboard_post_init_user(void) {
   // Customise these values if you need to debug the matrix
   //debug_enable=true;
   //debug_matrix=true;
   //debug_keyboard=true;
   //debug_mouse=true;
+
+  tp_recal_timer = timer_read32();
 }
 
 enum my_keycodes {
  BRACES = SAFE_RANGE,
+ SV_RECALIBRATE_POINTER,
 };
 
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_GUI, KC_BSPC, KC_DEL);
@@ -213,12 +218,12 @@ const uint16_t PROGMEM keymaps[NUM_LAYERS][MATRIX_ROWS][MATRIX_COLS] = {
         /*R1*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN1,        KC_TRNS,
         /*R2*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN3,        KC_TRNS,
         /*R3*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN2,        KC_TRNS,
-        /*R4*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN1,        KC_TRNS,
+        /*R4*/ KC_TRNS,        SV_RECALIBRATE_POINTER, KC_TRNS, KC_BTN1,        KC_TRNS,
 
         /*L1*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN1,        KC_TRNS,
         /*L2*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN3,        KC_TRNS,
         /*L3*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN2,        KC_TRNS,
-        /*L4*/ KC_TRNS,         KC_TRNS,        KC_TRNS,        KC_BTN1,        KC_TRNS,
+        /*L4*/ KC_TRNS,        SV_RECALIBRATE_POINTER, KC_TRNS, KC_BTN1,        KC_TRNS,
 
 	/*RT*/ _______,         _______,        _______,        _______,        _______,     _______,
         /*LT*/ _______,         _______,        _______,        _______,        _______,     _______
@@ -240,6 +245,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif
+
+    tp_recal_timer = timer_read32();
 
 #if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
     if (mh_auto_buttons_timer) {
@@ -286,6 +293,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	register_mods(mods);  // Restore mods.
       }
       return false;
+    case SV_RECALIBRATE_POINTER:
+      recalibrate_pointer();
+      return false;
     default:
       return true;
   }
@@ -313,6 +323,11 @@ void matrix_scan_user(void) {
       print("mh_auto_buttons: off\n");
   #endif
     }
+  }
+
+  if (tp_recal_timer && (timer_elapsed32(tp_recal_timer) > TP_RECAL_TIMEOUT)) {
+    recalibrate_pointer();
+    tp_recal_timer = timer_read32();
   }
 
 #ifdef ACHORDION
