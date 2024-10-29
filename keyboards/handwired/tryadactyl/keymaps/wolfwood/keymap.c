@@ -34,12 +34,11 @@ const key_override_t delete_thumb_override = ko_make_basic(MOD_MASK_GUI, LT(_NAV
 // GUI + esc = `
 //const key_override_t grave_esc_override = ko_make_basic(MOD_MASK_GUI, LT(_FUNCTION, KC_ESC), KC_GRV);
 
-const key_override_t **key_overrides = (const key_override_t *[]){
+const key_override_t *key_overrides[] = {
   	&delete_key_override,
 	&delete_thumb_override,
 	//&tilde_esc_override,
 	//&grave_esc_override,
-	NULL
 };
 
 // Combo stuff
