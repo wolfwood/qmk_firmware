@@ -77,27 +77,32 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_QWERTY] = LAYOUT_split_3x6_4(
+  [_QWERTY] = LAYOUT_split_2_3x6_1(
+      LT(_FUNCTION,KC_ESC),KC_UNDS,                                                                                                                          KC_MINS,         KC_EQL,
       KC_TAB,  KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_QUOT,
       KC_BSPC, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT,
       QK_GESC, KC_Z,         KC_X,         LT(_SYMBOL,KC_C),       LT(_NAVIGATION,KC_V),KC_B,  KC_N,            LT(_SYMBOL,KC_M),KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS,
-      LT(_NAVIGATION,KC_BSPC),LT(_SYMBOL,KC_SPC),LT(_FUNCTION,KC_ESC),KC_UNDS,                                  KC_MINS,         KC_EQL, LT(_SYMBOL, KC_ENT),KC_TAB),
+                                                                   LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
 
-  [_SYMBOL] = LAYOUT_split_3x6_4(
+  [_SYMBOL] = LAYOUT_split_2_3x6_1(
+        _______,      _______,                                                                                                        _______,      _______,
         KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      TG(_SYMBOL),
         _______, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL,
         KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, KC_RBRC,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE,
-	         _______,      _______,      _______,      _______,                         _______,      _______,      _______,      _______),
+	                                                   _______,                         _______),
 
-  [_NAVIGATION] = LAYOUT_split_3x6_4(
+  [_NAVIGATION] = LAYOUT_split_2_3x6_1(
+        _______, _______,                                                                                                                  _______, _______,
 	TG(_NAVIGATION),XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_PGDN,              XXXXXXX, XXXXXXX,
-        KC_ESC,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              KC_UP,   XXXXXXX,
-        _______, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),        LCTL(KC_UP), _______,
-                 _______,  _______,  _______,  _______,                           _______,       _______,            _______,              _______),
+        _______, KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              KC_UP,   _______,
+        XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),     LCTL(KC_UP),XXXXXXX,
+	                                                 _______,                                _______),
 
-  [_FUNCTION] = LAYOUT_split_3x6_4(
-        TG(_COLEMAKDH), XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_ESC, RALT_T(KC_F1), LGUI_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5, KC_F6, RCTL_T(KC_F7), RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX,
-        _______, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, KC_F11,  KC_F12,  XXXXXXX,        XXXXXXX, XXXXXXX, _______,
-                          XXXXXXX,  XXXXXXX, KC_SPC, XXXXXXX,           XXXXXXX, QK_BOOT,XXXXXXX,XXXXXXX),
+
+  [_FUNCTION] = LAYOUT_split_2_3x6_1(
+        _______, _______,                                                                                                                   _______,        QK_BOOT,
+        TG(_COLEMAKDH),XXXXXXX, XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX,        XXXXXXX,
+        XXXXXXX, RALT_T(KC_F1), LGUI_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5,   KC_F6,   RCTL_T(KC_F7), RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX,
+        _______, XXXXXXX,       XXXXXXX,       XXXXXXX,       KC_F11,        XXXXXXX, XXXXXXX, KC_F12,        XXXXXXX,       XXXXXXX,       XXXXXXX,        _______,
+                                                              _______,                         _______),
 };
