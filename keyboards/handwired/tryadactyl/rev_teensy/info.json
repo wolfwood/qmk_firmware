@@ -17,7 +17,8 @@
     },
     "caps_word": {
 	"enabled": true,
-	"both_shifts_turns_on": true
+	"both_shifts_turns_on": true,
+        "idle_timeout": 4000,
     }
     "matrix_pins": {
         "cols": ["F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7"],
