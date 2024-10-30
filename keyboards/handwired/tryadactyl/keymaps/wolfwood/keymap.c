@@ -5,7 +5,7 @@
 #include "quantum.h"
 
 // Santoku keymap set up
-enum santoku_layers {
+enum layers {
     _QWERTY,
     _COLEMAKDH,
     _SYMBOL,
@@ -45,8 +45,8 @@ enum combos {
 
 const uint16_t PROGMEM combo_fg[]       = {LCTL_T(KC_F), KC_G, COMBO_END};
 const uint16_t PROGMEM combo_tg[]       = {LCTL_T(KC_T), KC_G, COMBO_END};
-const uint16_t PROGMEM combo_hj[]        = {RCTL_T(KC_J), KC_H, COMBO_END};
-const uint16_t PROGMEM combo_mn[]        = {RCTL_T(KC_N), KC_M, COMBO_END};
+const uint16_t PROGMEM combo_hj[]       = {RCTL_T(KC_J), KC_H, COMBO_END};
+const uint16_t PROGMEM combo_mn[]       = {RCTL_T(KC_N), KC_M, COMBO_END};
 
 combo_t key_combos[] = {
   [COMBO_FG] = COMBO_ACTION(combo_fg),
@@ -94,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAVIGATION] = LAYOUT_split_2_3x6_1(
         _______, _______,                                                                                                                  _______, _______,
 	TG(_NAVIGATION),XXXXXXX,XXXXXXX,XXXXXXX,XXXXXXX, XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_PGDN,              XXXXXXX, XXXXXXX,
-        _______, KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              KC_UP,   _______,
+       _______,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              KC_UP,   _______,
         XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),     LCTL(KC_UP),XXXXXXX,
 	                                                 _______,                                _______),
 
