@@ -16,6 +16,7 @@ enum layers {
 
 enum keycodes {
     BRACES = SAFE_RANGE,
+    __nope_,
 };
 
 // Shift + Backspace = Del
@@ -74,6 +75,37 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
   }
 }
 
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+void mouse_mode(bool);
+
+static uint16_t mh_auto_buttons_timer;
+extern int tp_buttons; // mousekey button state set in action.c and used in ps2_mouse.c
+#endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+  if (mh_auto_buttons_timer) {
+    switch (keycode) {
+    case KC_BTN1:
+    case KC_BTN2:
+    case KC_BTN3:
+    case KC_WBAK:
+    case KC_WFWD:
+      break;
+    default:
+      mouse_mode(false);
+    }
+  }
+#endif
+
+  switch (keycode) {
+  case __nope_:
+    layer_off(get_highest_layer(layer_state));
+    return true;
+  }
+
+  return true;
+}
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -115,9 +147,52 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                               _______,                         _______),
 
   [_MOUSE] = LAYOUT_split_2_3x6_1(
-        _______,      _______,                                                                                                             _______,      _______,
-        _______,      _______,      _______,      _______,      _______,      _______,  _______, _______,      _______,      _______,      _______,      _______,
-        _______,      _______,      _______,      _______,      _______,      _______,  _______, _______,      _______,      _______,      _______,      _______,
-        _______,      _______,      _______,      _______,      _______,      _______,  _______, _______,      _______,      _______,      _______,      _______,
-	                                                        _______,                         _______),
+        __nope_,      __nope_,                                                                                                             __nope_,      __nope_,
+        __nope_,      __nope_,      KC_WBAK,      KC_WFWD,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
+        __nope_,      __nope_,      MS_BTN2,      MS_BTN3,      MS_BTN1,      __nope_,  __nope_, MS_BTN1,      MS_BTN3,      MS_BTN2,      __nope_,      __nope_,
+        __nope_,      __nope_,      __nope_,      __nope_,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
+	                                                        __nope_,                         __nope_),
 };
+
+
+
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
+  if (mh_auto_buttons_timer) {
+    mh_auto_buttons_timer = timer_read();
+  } else {
+    if (!tp_buttons) {
+      mouse_mode(true);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: on\n");
+  #endif
+    }
+  }
+}
+
+void matrix_scan_user(void) {
+  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
+    if (!tp_buttons) {
+      mouse_mode(false);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: off\n");
+  #endif
+    }
+  }
+
+#ifdef ACHORDION
+  achordion_task();
+#endif
+}
+
+void mouse_mode(bool on) {
+  if (on) {
+    layer_on(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = timer_read();
+  } else {
+    layer_off(MH_AUTO_BUTTONS_LAYER);
+    mh_auto_buttons_timer = 0;
+  }
+}
+
+#endif // defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && #defined MOUSEKEY_ENABLE

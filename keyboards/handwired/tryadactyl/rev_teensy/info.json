@@ -1,6 +1,6 @@
 {
     "manufacturer": "wolfwood",
-    "keyboard_name": "handwired/tryadactyl",
+    "keyboard_name": "Tryadactyl w/ Trackpoint",
     "maintainer": "wolfwood",
     "bootloader": "halfkay",
     "diode_direction": "ROW2COL",
@@ -39,6 +39,13 @@
         "pid": "0x0000",
         "vid": "0xFEED"
     },
+    "ps2": {
+        "enabled": true,
+        "mouse_enabled": true,
+        "driver": "usart",
+        "clock_pin": "D5",
+        "data_pin": "D2",
+   },
     "layouts": {
         "LAYOUT_split": {
             "layout": [
