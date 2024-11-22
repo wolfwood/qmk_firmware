@@ -138,14 +138,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       LT(_FUNCTION,KC_ESC),KC_UNDS,                                                                                                                          KC_MINS,         KC_EQL,
       KC_TAB,  KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_QUOT,
       KC_BSPC, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT,
-      QK_GESC, KC_Z,         KC_X,         LT(_SYMBOL,KC_C),       LT(_NAVIGATION,KC_V),KC_B,  KC_N,            LT(_SYMBOL,KC_M),KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS,
+      QK_GESC, KC_Z, LT(_FUNCTION,KC_X), LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_V), KC_B,         KC_N,   LT(_SYMBOL,KC_M),LT(_NAVIGATION,KC_COMM),LT(_FUNCTION,KC_DOT),KC_SLSH, KC_BSLS,
                                                                    LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
 
 [_COLEMAKDH] = LAYOUT_split_2_3x6_1(
         LT(_FUNCTION,KC_ESC),KC_UNDS,                                                                                                                          KC_MINS,         KC_EQL,
         KC_TAB,  KC_Q,         KC_W,         KC_F,                   KC_P,         KC_B,         KC_J,            KC_L,            KC_U,         KC_Y,         KC_SCLN,         KC_QUOT,
         KC_BSPC, RALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_ENT,
-        QK_GESC, KC_Z,         KC_X,       LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_D), KC_V,         KC_K,            LT(_SYMBOL,KC_H),KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS,
+        QK_GESC, KC_Z, LT(_FUNCTION,KC_X), LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_D), KC_V,         KC_K, LT(_SYMBOL,KC_H),LT(_NAVIGATION,KC_COMM),LT(_FUNCTION,KC_DOT),KC_SLSH,   KC_BSLS,
                                                                      LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
 
   [_SYMBOL] = LAYOUT_split_2_3x6_1(
