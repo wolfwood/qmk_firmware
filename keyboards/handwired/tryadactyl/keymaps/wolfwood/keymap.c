@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-#include "quantum.h"
 
 // Santoku keymap set up
 enum layers {
@@ -149,7 +148,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_GESC, KC_Z,         KC_X,       LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_D), KC_V,         KC_K,            LT(_SYMBOL,KC_H),KC_COMM,      KC_DOT,       KC_SLSH,         KC_BSLS,
                                                                      LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
 
-
   [_SYMBOL] = LAYOUT_split_2_3x6_1(
         _______, _______,                                                                                                             _______,      _______,
         _______, KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_PIPE,
@@ -163,7 +161,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,  KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,              KC_UP,   _______,
         XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,       LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),     LCTL(KC_UP),XXXXXXX,
 	                                                 _______,                                _______),
-
 
   [_FUNCTION] = LAYOUT_split_2_3x6_1(
         TG(_COLEMAKDH), XXXXXXX,                                                                                                            QK_MAKE,        QK_BOOT,
