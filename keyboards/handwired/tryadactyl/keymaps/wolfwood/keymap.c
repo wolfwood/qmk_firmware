@@ -166,10 +166,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
   [_FUNCTION] = LAYOUT_split_2_3x6_1(
-        _______, _______,                                                                                                                   _______,        QK_BOOT,
-        TG(_COLEMAKDH),XXXXXXX, XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX, XXXXXXX, XXXXXXX,       XXXXXXX,       XXXXXXX,       XXXXXXX,        XXXXXXX,
+        TG(_COLEMAKDH), XXXXXXX,                                                                                                            QK_MAKE,        QK_BOOT,
+        XXXXXXX, KC_MUTE,       KC_VOLD,       KC_VOLU,       KC_F20,        XXXXXXX, XXXXXXX, KC_MPLY,       KC_MPRV,       KC_MNXT,       XXXXXXX,        XXXXXXX,
         XXXXXXX, RALT_T(KC_F1), LGUI_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5,   KC_F6,   RCTL_T(KC_F7), RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX,
-        _______, XXXXXXX,       XXXXXXX,       XXXXXXX,       KC_F11,        XXXXXXX, XXXXXXX, KC_F12,        XXXXXXX,       XXXXXXX,       XXXXXXX,        _______,
+        _______, XXXXXXX,       KC_BRID,       KC_BRIU,       KC_F11,        XXXXXXX, XXXXXXX, KC_F12,        XXXXXXX,       XXXXXXX,       XXXXXXX,        _______,
                                                               _______,                         _______),
 
   [_MOUSE] = LAYOUT_split_2_3x6_1(
