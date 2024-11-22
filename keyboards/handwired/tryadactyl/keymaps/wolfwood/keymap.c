@@ -151,10 +151,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
   [_SYMBOL] = LAYOUT_split_2_3x6_1(
-        _______,      _______,                                                                                                        _______,      _______,
-        KC_GRV,  KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      TG(_SYMBOL),
+        _______, _______,                                                                                                             _______,      _______,
+        _______, KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_PIPE,
         _______, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL,
-        KC_TILD, KC_BSLS,      KC_UNDS,      KC_PLUS,      KC_LCBR,      KC_RCBR,  KC_LBRC, KC_RBRC,      KC_COMM,      KC_DOT,       KC_SLSH,      KC_PIPE,
+        KC_TILD, KC_MINS, LT(_FUNCTION,KC_UNDS), KC_PLUS, LT(_NAVIGATION,KC_EQL), KC_LBRC, KC_RBRC, BRACES, _______,    _______,      _______,      _______,
 	                                                   _______,                         _______),
 
   [_NAVIGATION] = LAYOUT_split_2_3x6_1(
