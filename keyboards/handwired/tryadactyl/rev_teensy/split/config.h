@@ -19,6 +19,12 @@
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
+//#define INIT_EE_HANDS_LEFT
+//#define INIT_EE_HANDS_RIGHT
+
+//define SPLIT_USB_DETECT
+#define EE_HANDS
+
 #define PS2_MOUSE_ROTATE 180
 
 #ifdef PS2_DRIVER_USART
