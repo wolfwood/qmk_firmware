@@ -83,7 +83,7 @@ extern int tp_buttons; // mousekey button state set in action.c and used in ps2_
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
-  if (mh_auto_buttons_timer) {
+  /*if (mh_auto_buttons_timer) {
     switch (keycode) {
     case KC_BTN1:
     case KC_BTN2:
@@ -94,7 +94,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     default:
       mouse_mode(false);
     }
-  }
+    }*/
 #endif
 
   const uint8_t mods = get_mods();
@@ -125,7 +125,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return false;
   case __nope_:
-    layer_off(get_highest_layer(layer_state));
+    if (IS_LAYER_ON(MH_AUTO_BUTTONS_LAYER)) {
+      layer_off(MH_AUTO_BUTTONS_LAYER/*get_highest_layer(layer_state)*/);
+    }
     return true;
   }
 
@@ -171,8 +173,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_split_2_3x6_1(
         __nope_,      __nope_,                                                                                                             __nope_,      __nope_,
-        __nope_,      __nope_,      KC_WBAK,      KC_WFWD,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
-        __nope_,      __nope_,      MS_BTN2,      MS_BTN3,      MS_BTN1,      __nope_,  __nope_, MS_BTN1,      MS_BTN3,      MS_BTN2,      __nope_,      __nope_,
+        __nope_,      __nope_,      MS_BTN2,      MS_BTN3,      MS_BTN1,      __nope_,  __nope_, __nope_,      MS_BTN1,      MS_BTN3,      MS_BTN2,      __nope_,
+        __nope_,      __nope_,      __nope_,      __nope_,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
         __nope_,      __nope_,      __nope_,      __nope_,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
 	                                                        __nope_,                         __nope_),
 };
@@ -193,21 +195,6 @@ void ps2_mouse_moved_user(report_mouse_t *mouse_report) {
   }
 }
 
-void matrix_scan_user(void) {
-  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
-    if (!tp_buttons) {
-      mouse_mode(false);
-  #if defined CONSOLE_ENABLE
-      print("mh_auto_buttons: off\n");
-  #endif
-    }
-  }
-
-#ifdef ACHORDION
-  achordion_task();
-#endif
-}
-
 void mouse_mode(bool on) {
   if (on) {
     layer_on(MH_AUTO_BUTTONS_LAYER);
@@ -219,3 +206,20 @@ void mouse_mode(bool on) {
 }
 
 #endif // defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && #defined MOUSEKEY_ENABLE
+
+void matrix_scan_user(void) {
+#if defined MH_AUTO_BUTTONS && defined PS2_MOUSE_ENABLE && defined MOUSEKEY_ENABLE
+  if (mh_auto_buttons_timer && (timer_elapsed(mh_auto_buttons_timer) > MH_AUTO_BUTTONS_TIMEOUT)) {
+    if (!tp_buttons) {
+      mouse_mode(false);
+  #if defined CONSOLE_ENABLE
+      print("mh_auto_buttons: off\n");
+  #endif
+    }
+  }
+#endif
+
+#ifdef ACHORDION
+  achordion_task();
+#endif
+}
