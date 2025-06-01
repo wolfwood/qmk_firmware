@@ -41,36 +41,53 @@ enum combos {
   COMBO_TG,
   COMBO_HJ,
   COMBO_MN,
+  COMBO_IO,
+  COMBO_UY,
+  COMBO_NM,
 };
 
 const uint16_t PROGMEM combo_fg[]       = {LCTL_T(KC_F), KC_G, COMBO_END};
 const uint16_t PROGMEM combo_tg[]       = {LCTL_T(KC_T), KC_G, COMBO_END};
 const uint16_t PROGMEM combo_hj[]       = {RCTL_T(KC_J), KC_H, COMBO_END};
 const uint16_t PROGMEM combo_mn[]       = {RCTL_T(KC_N), KC_M, COMBO_END};
+const uint16_t PROGMEM combo_io[]       = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_uy[]       = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_nm[]       = {KC_N, LT(_SYMBOL,KC_M), COMBO_END};
 
 combo_t key_combos[] = {
   [COMBO_FG] = COMBO_ACTION(combo_fg),
   [COMBO_TG] = COMBO_ACTION(combo_tg),
   [COMBO_HJ] = COMBO_ACTION(combo_hj),
-  [COMBO_MN] = COMBO_ACTION(combo_mn)
+  [COMBO_MN] = COMBO_ACTION(combo_mn),
+  [COMBO_IO] = COMBO_ACTION(combo_io),
+  [COMBO_UY] = COMBO_ACTION(combo_uy),
+  [COMBO_NM] = COMBO_ACTION(combo_nm),
 };
 
 uint16_t COMBO_LEN = ARRAY_SIZE(key_combos);
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch (combo_index) {
-    case COMBO_FG:
-    case COMBO_TG:
-      if (pressed) {
-	tap_code16(KC_HOME);
-      }
-      break;
-    case COMBO_HJ:
-    case COMBO_MN:
-      if (pressed) {
-	tap_code16(KC_END);
-      }
-      break;
+  case COMBO_FG:
+  case COMBO_TG:
+    if (pressed) {
+      tap_code16(KC_HOME);
+    }
+    break;
+  case COMBO_HJ:
+  case COMBO_MN:
+    if (pressed) {
+      tap_code16(KC_END);
+    }
+    break;
+  case COMBO_NM:
+  case COMBO_UY:
+    if (pressed) {
+      keyrecord_t r;
+      r.event.pressed = true;
+      process_record_user(BRACES, &r);
+    }
+    break;
   }
 }
 
