@@ -117,6 +117,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   const uint8_t mods = get_mods();
   //const uint8_t oneshot_mods = get_oneshot_mods();
 
+  /*
+    o o o o : [^]
+    o o o x : "^"
+    o o x o : {
+    ^
+    }
+    o o x x : '^'
+    o x o o : (^)
+    o x o x : ()^
+    o x x o : {^}
+    o x x x : \"^\"
+    x o o o : <^>
+    x o o x : $(^) + capsword
+    x o x o : {}^
+    x o x x : ""^
+    x x o o : |^|
+    x x o x : ||^
+    x x x o : `^`
+    x x x x : \'^\'
+   */
+
   switch (keycode) {
   case BRACES:
     if (record->event.pressed) {
@@ -124,20 +145,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_mods(MOD_MASK_CSAG);
       if ((mods /*| oneshot_mods*/) & MOD_MASK_CTRL) {
         if ((mods /*| oneshot_mods*/) & MOD_MASK_SHIFT) {
-          SEND_STRING("''");
+          if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
+            if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+              SEND_STRING("\\'\\'" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            } else {
+              SEND_STRING("\\\"\\\"" SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+            }
+          } else {
+            if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+              SEND_STRING("$()" SS_TAP(X_LEFT));
+              caps_word_on();
+            } else {
+              SEND_STRING("''" SS_TAP(X_LEFT));
+            }
+          }
         } else {
-          SEND_STRING("\"\"");
+          if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
+            if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+              SEND_STRING("||");
+            } else {
+              SEND_STRING("()");
+            }
+          } else {
+            if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+              SEND_STRING("\"\"");
+            } else {
+              SEND_STRING("\"\"" SS_TAP(X_LEFT));
+            }
+          }
+        }
+      } else if ((mods /*| oneshot_mods*/) & MOD_MASK_SHIFT) {
+        if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
+          if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+            SEND_STRING("``" SS_TAP(X_LEFT));
+          } else {
+            SEND_STRING("{}" SS_TAP(X_LEFT));
+          }
+        } else {
+          if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+            SEND_STRING("{}");
+          } else {
+            SEND_STRING("{}" SS_TAP(X_LEFT) "\n" SS_TAP(X_UP) SS_TAP(X_END) "\n\t");
+          }
+        }
+      } else if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
+        if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
+          SEND_STRING("||" SS_TAP(X_LEFT));
+        } else {
+          SEND_STRING("()" SS_TAP(X_LEFT));
         }
       } else if ((mods /*| oneshot_mods*/) & MOD_MASK_ALT) {
-        SEND_STRING("<>");
-      } else if ((mods /*| oneshot_mods*/) & MOD_MASK_GUI) {
-        SEND_STRING("()");
-      } else if ((mods /*| oneshot_mods*/) & MOD_MASK_SHIFT) {
-        SEND_STRING("{}");
+        SEND_STRING("<>" SS_TAP(X_LEFT));
       } else {
-        SEND_STRING("[]");
+        SEND_STRING("[]" SS_TAP(X_LEFT));
       }
-      tap_code(KC_LEFT);  // Move cursor between braces.
       register_mods(mods);  // Restore mods.
     }
     return false;
