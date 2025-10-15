@@ -18,6 +18,16 @@ enum keycodes {
     __nope_,
 };
 
+#define CTLnope LCTL_T(__nope_)
+#define SFTnope LSFT_T(__nope_)
+#define GUInope LGUI_T(__nope_)
+#define ALTnope LALT_T(__nope_)
+
+#define RCTLnop RCTL_T(__nope_)
+#define RSFTnop RSFT_T(__nope_)
+#define RGUInop RGUI_T(__nope_)
+#define RALTnop RALT_T(__nope_)
+
 // Shift + Backspace = Del
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_GUI, KC_BSPC, KC_DEL);
 const key_override_t delete_thumb_override = ko_make_basic(MOD_MASK_GUI, LT(_NAVIGATION, KC_BSPC), KC_DEL);
@@ -205,6 +215,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       register_mods(mods);  // Restore mods.
     }
     return false;
+    // implement mod-tap for macro
+  case CTLnope:
+  case SFTnope:
+  case GUInope:
+  case ALTnope:
+  case RCTLnop:
+  case RSFTnop:
+  case RGUInop:
+  case RALTnop:
+    if (!record->tap.count || !record->event.pressed) {
+        break;
+    }
+    // fall through to handle nope
   case __nope_:
     if (IS_LAYER_ON(MH_AUTO_BUTTONS_LAYER)) {
       layer_off(MH_AUTO_BUTTONS_LAYER/*get_highest_layer(layer_state)*/);
@@ -254,8 +277,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_MOUSE] = LAYOUT_split_2_3x6_1(
         __nope_,      __nope_,                                                                                                             __nope_,      __nope_,
-        __nope_,      __nope_,      MS_BTN2,      MS_BTN3,      MS_BTN1,      __nope_,  __nope_, __nope_,      MS_BTN1,      MS_BTN3,      MS_BTN2,      __nope_,
-        __nope_,      __nope_,      __nope_,      __nope_,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
+        __nope_,      MS_BTN1,      MS_BTN2,      MS_BTN3,      MS_BTN1,      __nope_,  __nope_, __nope_,      MS_BTN1,      MS_BTN3,      MS_BTN2,      __nope_,
+        __nope_,      ALTnope,      GUInope,      SFTnope,      CTLnope,      __nope_,  __nope_, RCTLnop,      RSFTnop,      RGUInop,      RALTnop,      __nope_,
         __nope_,      __nope_,      __nope_,      __nope_,      __nope_,      __nope_,  __nope_, __nope_,      __nope_,      __nope_,      __nope_,      __nope_,
 	                                                        __nope_,                         __nope_),
 };
