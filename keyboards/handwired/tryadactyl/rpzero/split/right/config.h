@@ -1,1 +1,3 @@
 #define INIT_EE_HANDS_RIGHT
+
+#define PS2_MOUSE_ROTATE 180
