@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_GESC, KC_Z, LT(_FUNCTION,KC_X), LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_V), KC_B,         KC_N,   LT(_SYMBOL,KC_M),LT(_NAVIGATION,KC_COMM),LT(_FUNCTION,KC_DOT),KC_SLSH, KC_BSLS,
                                                                    KC_SPC,                                      KC_ENT),
 
-[_COLEMAKDH] = LAYOUT_split_2_3x6_1(
+  [_COLEMAKDH] = LAYOUT_split_2_3x6_1(
         QK_GESC, KC_UNDS,                                                                                                                                      KC_MINS,         KC_EQL,
         KC_TAB,  KC_Q,         KC_W,         KC_F,                   KC_P,         KC_B,         KC_J,            KC_L,            KC_U,         KC_Y,         KC_SCLN,         KC_QUOT,
         KC_BSPC, LALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_ENT,
