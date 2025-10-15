@@ -257,35 +257,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_2_3x6_1(
       QK_GESC, KC_UNDS,                                                                                                                                      KC_MINS,         KC_EQL,
       KC_TAB,  KC_Q,         KC_W,         KC_E,                   KC_R,         KC_T,         KC_Y,            KC_U,            KC_I,         KC_O,         KC_P,            KC_QUOT,
-      KC_BSPC, RALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT,
+      KC_BSPC, LALT_T(KC_A), LGUI_T(KC_S), LSFT_T(KC_D),           LCTL_T(KC_F), KC_G,         KC_H,            RCTL_T(KC_J),    RSFT_T(KC_K), RGUI_T(KC_L), RALT_T(KC_SCLN), KC_ENT,
       QK_GESC, KC_Z, LT(_FUNCTION,KC_X), LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_V), KC_B,         KC_N,   LT(_SYMBOL,KC_M),LT(_NAVIGATION,KC_COMM),LT(_FUNCTION,KC_DOT),KC_SLSH, KC_BSLS,
-                                                                   LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
+                                                                   KC_SPC,                                      KC_ENT),
 
 [_COLEMAKDH] = LAYOUT_split_2_3x6_1(
         QK_GESC, KC_UNDS,                                                                                                                                      KC_MINS,         KC_EQL,
         KC_TAB,  KC_Q,         KC_W,         KC_F,                   KC_P,         KC_B,         KC_J,            KC_L,            KC_U,         KC_Y,         KC_SCLN,         KC_QUOT,
-        KC_BSPC, RALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_ENT,
+        KC_BSPC, LALT_T(KC_A), LGUI_T(KC_R), LSFT_T(KC_S),           LCTL_T(KC_T), KC_G,         KC_M,            RCTL_T(KC_N),    RSFT_T(KC_E), RGUI_T(KC_I), RALT_T(KC_O),    KC_ENT,
         QK_GESC, KC_Z, LT(_FUNCTION,KC_X), LT(_SYMBOL,KC_C), LT(_NAVIGATION,KC_D), KC_V,         KC_K, LT(_SYMBOL,KC_H),LT(_NAVIGATION,KC_COMM),LT(_FUNCTION,KC_DOT),KC_SLSH,   KC_BSLS,
-                                                                     LT(_SYMBOL,KC_SPC),                          LT(_SYMBOL, KC_ENT)),
+                                                                     KC_SPC,                                      KC_ENT),
 
   [_SYMBOL] = LAYOUT_split_2_3x6_1(
         _______, _______,                                                                                                             _______,      _______,
         _______, KC_EXLM,      KC_AT,        KC_HASH,      KC_DLR,       KC_PERC,  KC_CIRC, KC_AMPR,      KC_ASTR,      KC_LPRN,      KC_RPRN,      KC_PIPE,
-        _______, RALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL,
+        _______, LALT_T(KC_1), LGUI_T(KC_2), LSFT_T(KC_3), LCTL_T(KC_4), KC_5,     KC_6,    RCTL_T(KC_7), RSFT_T(KC_8), RGUI_T(KC_9), RALT_T(KC_0), KC_EQL,
         KC_TILD, KC_MINS,      KC_UNDS, KC_PLUS, LT(_NAVIGATION,KC_EQL), KC_LBRC, KC_RBRC,  BRACES,       _______,      _______,      _______,      _______,
 	                                                   _______,                         _______),
 
   [_NAVIGATION] = LAYOUT_split_2_3x6_1(
         _______, _______,                                                                                                                  _______, _______,
 	_______, KC_AGIN, LCTL(KC_W),LALT(KC_W),KC_INS,  XXXXXXX,  KC_HOME,       KC_PGDN,       KC_PGUP,            KC_PGDN,            XXXXXXX, XXXXXXX,
-        _______, KC_RALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,            KC_UP,   _______,
+        _______, KC_LALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  XXXXXXX,  KC_END,        KC_LEFT,       KC_RGHT,            KC_DOWN,            KC_UP,   _______,
         XXXXXXX, KC_UNDO,  KC_CUT,   KC_COPY,  KC_PSTE,  XXXXXXX,  XXXXXXX,       LCTL(KC_LEFT), LCTL(KC_RGHT),      LCTL(KC_DOWN),      LCTL(KC_UP),XXXXXXX,
 	                                                 _______,                                _______),
 
   [_FUNCTION] = LAYOUT_split_2_3x6_1(
         TG(_COLEMAKDH), XXXXXXX,                                                                                                            QK_MAKE,        QK_BOOT,
-        XXXXXXX, KC_MUTE,       KC_VOLD,       KC_VOLU,       KC_F20,        XXXXXXX, XXXXXXX, KC_MPLY,       KC_MPRV,       KC_MNXT,       XXXXXXX,        XXXXXXX,
-        XXXXXXX, RALT_T(KC_F1), LGUI_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5,   KC_F6,   RCTL_T(KC_F7), RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX,
+        XXXXXXX, KC_MUTE,       KC_VOLD,       KC_VOLU,       KC_F20,        XXXXXXX, XXXXXXX, KC_MPLY,       KC_MPRV,       KC_MNXT,       XXXXXXX,        QK_MAKE,
+        XXXXXXX, LALT_T(KC_F1), LGUI_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5,   KC_F6,   RCTL_T(KC_F7), RSFT_T(KC_F8), RGUI_T(KC_F9), RALT_T(KC_F10), XXXXXXX,
         _______, XXXXXXX,       KC_BRID,       KC_BRIU,       KC_F11,        XXXXXXX, XXXXXXX, KC_F12,        XXXXXXX,       XXXXXXX,       XXXXXXX,        _______,
                                                               _______,                         _______),
 
