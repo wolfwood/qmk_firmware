@@ -54,15 +54,19 @@ enum combos {
   COMBO_IO,
   COMBO_UY,
   COMBO_NM,
+  COMBO_WE,
+  COMBO_RT,
 };
 
-const uint16_t PROGMEM combo_fg[]       = {LCTL_T(KC_F), KC_G, COMBO_END};
-const uint16_t PROGMEM combo_tg[]       = {LCTL_T(KC_T), KC_G, COMBO_END};
-const uint16_t PROGMEM combo_hj[]       = {RCTL_T(KC_J), KC_H, COMBO_END};
-const uint16_t PROGMEM combo_mn[]       = {RCTL_T(KC_N), KC_M, COMBO_END};
-const uint16_t PROGMEM combo_io[]       = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM combo_uy[]       = {KC_U, KC_Y, COMBO_END};
-const uint16_t PROGMEM combo_nm[]       = {KC_N, LT(_SYMBOL,KC_M), COMBO_END};
+const uint16_t PROGMEM combo_fg[] = {LCTL_T(KC_F), KC_G, COMBO_END};
+const uint16_t PROGMEM combo_tg[] = {LCTL_T(KC_T), KC_G, COMBO_END};
+const uint16_t PROGMEM combo_hj[] = {RCTL_T(KC_J), KC_H, COMBO_END};
+const uint16_t PROGMEM combo_mn[] = {RCTL_T(KC_N), KC_M, COMBO_END};
+const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_uy[] = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM combo_nm[] = {KC_N, LT(_SYMBOL, KC_M), COMBO_END};
+const uint16_t PROGMEM combo_we[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM combo_rt[] = {KC_R, KC_T, COMBO_END};
 
 combo_t key_combos[] = {
   [COMBO_FG] = COMBO_ACTION(combo_fg),
@@ -72,6 +76,8 @@ combo_t key_combos[] = {
   [COMBO_IO] = COMBO_ACTION(combo_io),
   [COMBO_UY] = COMBO_ACTION(combo_uy),
   [COMBO_NM] = COMBO_ACTION(combo_nm),
+  [COMBO_WE] = COMBO_ACTION(combo_we),
+  [COMBO_RT] = COMBO_ACTION(combo_rt),
 };
 
 uint16_t COMBO_LEN = ARRAY_SIZE(key_combos);
@@ -91,11 +97,17 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     }
     break;
   case COMBO_NM:
-  case COMBO_UY:
     if (pressed) {
       keyrecord_t r;
       r.event.pressed = true;
       process_record_user(BRACES, &r);
+    }
+    break;
+  case COMBO_WE:
+  case COMBO_UY:
+  case COMBO_RT:
+    if (pressed) {
+      tap_code16(KC_SPC);
     }
     break;
   }
