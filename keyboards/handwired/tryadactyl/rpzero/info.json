@@ -1,0 +1,37 @@
+{
+    "manufacturer": "wolfwood",
+    "keyboard_name": "Tryadactyl w/ Trackpoint",
+    "maintainer": "wolfwood",
+    "bootloader": "rp2040",
+    "diode_direction": "ROW2COL",
+    "features": {
+        "bootmagic": false,
+        "command": false,
+        //"console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+	    "combo": true,
+	    "grave_esc": true,
+	    "key_override": true
+    },
+    "caps_word": {
+	    "enabled": true,
+	    "both_shifts_turns_on": true,
+        "idle_timeout": 4000,
+    }
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "vid": "0x1BAD",
+        "pid": "0x5EED"
+    },
+    "ps2": {
+        "enabled": true,
+        "mouse_enabled": true,
+        "driver": "vendor",
+        "clock_pin": "GP15",
+        "data_pin": "GP14",
+    },
+}

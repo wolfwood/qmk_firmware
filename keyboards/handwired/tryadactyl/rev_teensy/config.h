@@ -20,6 +20,7 @@
 //#define NO_ACTION_ONESHOT
 
 #define PS2_MOUSE_ROTATE 180
+#define PS2_MOUSE_USE_REMOTE_MODE
 
 #ifdef PS2_DRIVER_USART
 /* synchronous, odd parity, 1-bit stop, 8-bit data, sample at falling edge */
