@@ -9,5 +9,5 @@
   #define PS2_MOUSE_SCROLL_BTN_SEND 1000 /* Default */
   #define PS2_MOUSE_SCROLL_DIVISOR_H 2
   #define PS2_MOUSE_SCROLL_DIVISOR_V 2
-  #define PS2_MOUSE_USE_REMOTE_MODE
+//  #define PS2_MOUSE_USE_REMOTE_MODE
 #endif
